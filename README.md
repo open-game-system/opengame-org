@@ -37,7 +37,7 @@ This repository contains the source code for [OpenGame.org](https://opengame.org
 
 ```bash
 # Clone the repository
-git clone https://github.com/open-game-collective/opengame-org.git
+git clone https://github.com/open-game-system/opengame-org.git
 cd opengame-org
 
 # Install dependencies
@@ -165,14 +165,14 @@ To set up a custom domain (like opengame.org):
 
 ## Related Repositories
 
-The OpenGame.org website is part of the Open Game Collective ecosystem:
+The OpenGame.org website is part of the Open Game System ecosystem:
 
-- [specification](https://github.com/open-game-collective/specification) - OGS specification documents
-- [opengame-api](https://github.com/open-game-collective/opengame-api) - API server implementation
-- [auth-kit](https://github.com/open-game-collective/auth-kit) - Authentication SDK
-- [notification-kit](https://github.com/open-game-collective/notification-kit) - Notifications SDK
-- [cast-kit](https://github.com/open-game-collective/cast-kit) - TV casting SDK
-- [opengame-app](https://github.com/open-game-collective/opengame-app) - Mobile app component
+- [specification](https://github.com/open-game-system/specification) - OGS specification documents
+- [opengame-api](https://github.com/open-game-system/opengame-api) - API server implementation
+- [auth-kit](https://github.com/open-game-system/auth-kit) - Authentication SDK
+- [notification-kit](https://github.com/open-game-system/notification-kit) - Notifications SDK
+- [cast-kit](https://github.com/open-game-system/cast-kit) - TV casting SDK
+- [opengame-app](https://github.com/open-game-system/opengame-app) - Mobile app component
 
 ## License
 
@@ -180,5 +180,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Contact
 
-- GitHub: [open-game-collective](https://github.com/open-game-collective)
+- GitHub: [open-game-system](https://github.com/open-game-system)
 - Email: [hello@opengame.org](mailto:hello@opengame.org) 

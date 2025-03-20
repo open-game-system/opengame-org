@@ -1,8 +1,8 @@
-
 import { useState, useEffect } from 'react';
 import { Menu, X, Github } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import ThemeToggle from './ThemeToggle';
+import NavBarLogo from './NavBarLogo';
 
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -43,6 +43,9 @@ const NavBar = () => {
           <a href="#how-it-works" className="text-sm font-medium hover:text-primary transition-colors">
             How It Works
           </a>
+          <a href="#protocol-examples" className="text-sm font-medium hover:text-primary transition-colors">
+            Protocol Examples
+          </a>
           <a href="#get-started" className="text-sm font-medium hover:text-primary transition-colors">
             Get Started
           </a>
@@ -51,7 +54,7 @@ const NavBar = () => {
           </a>
           <ThemeToggle />
           <Button asChild className="bg-primary hover:bg-primary/90">
-            <a href="https://github.com/open-game-collective" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/open-game-system" target="_blank" rel="noopener noreferrer">
               <Github className="mr-2 h-4 w-4" />
               GitHub
             </a>
@@ -98,6 +101,13 @@ const NavBar = () => {
               How It Works
             </a>
             <a 
+              href="#protocol-examples" 
+              className="text-base font-medium hover:text-primary transition-colors py-2"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Protocol Examples
+            </a>
+            <a 
               href="#get-started" 
               className="text-base font-medium hover:text-primary transition-colors py-2"
               onClick={() => setIsMenuOpen(false)}
@@ -112,7 +122,7 @@ const NavBar = () => {
               FAQ
             </a>
             <Button asChild className="bg-primary hover:bg-primary/90 w-full">
-              <a href="https://github.com/open-game-collective" target="_blank" rel="noopener noreferrer">
+              <a href="https://github.com/open-game-system" target="_blank" rel="noopener noreferrer">
                 <Github className="mr-2 h-4 w-4" />
                 GitHub
               </a>

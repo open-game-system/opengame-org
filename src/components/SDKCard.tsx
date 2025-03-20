@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -9,6 +8,7 @@ interface SDKCardProps {
   icon: React.ReactNode;
   delay?: number;
   className?: string;
+  href?: string;
 }
 
 const SDKCard: React.FC<SDKCardProps> = ({ 
@@ -16,7 +16,8 @@ const SDKCard: React.FC<SDKCardProps> = ({
   description, 
   icon,
   delay = 0,
-  className = '' 
+  className = '',
+  href = '#'
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -72,7 +73,7 @@ const SDKCard: React.FC<SDKCardProps> = ({
         <h3 className="text-xl font-semibold mb-2 font-orbitron">{title}</h3>
         <p className="text-muted-foreground mb-4">{description}</p>
         <a 
-          href="#" 
+          href={href} 
           className="inline-flex items-center text-primary hover:text-primary/80 transition-colors"
         >
           Learn more 

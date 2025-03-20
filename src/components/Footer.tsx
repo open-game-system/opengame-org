@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Github, Mail, Link, Globe } from 'lucide-react';
 
@@ -13,7 +12,7 @@ const Footer = () => {
               Bridge web games to native features with ease.
             </p>
             <div className="flex space-x-4">
-              <a href="https://github.com/open-game-collective" className="text-muted-foreground hover:text-primary transition-colors" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+              <a href="https://github.com/open-game-system" className="text-muted-foreground hover:text-primary transition-colors" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
                 <Github className="h-5 w-5" />
               </a>
               <a href="https://opengame.org" className="text-muted-foreground hover:text-primary transition-colors" aria-label="Website" target="_blank" rel="noopener noreferrer">
@@ -29,22 +28,22 @@ const Footer = () => {
             <h3 className="font-semibold mb-4">Documentation</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="https://github.com/open-game-collective/specification" className="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/open-game-system/specification" className="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
                   OGS Specification
                 </a>
               </li>
               <li>
-                <a href="https://github.com/open-game-collective/auth-kit" className="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/open-game-system/auth-kit" className="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
                   Auth Kit
                 </a>
               </li>
               <li>
-                <a href="https://github.com/open-game-collective/notification-kit" className="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/open-game-system/notification-kit" className="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
                   Notification Kit
                 </a>
               </li>
               <li>
-                <a href="https://github.com/open-game-collective/cast-kit" className="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/open-game-system/cast-kit" className="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
                   Cast Kit
                 </a>
               </li>
@@ -55,12 +54,12 @@ const Footer = () => {
             <h3 className="font-semibold mb-4">Resources</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="https://github.com/orgs/open-game-collective/discussions" className="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/orgs/open-game-system/discussions" className="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
                   Community Discussions
                 </a>
               </li>
               <li>
-                <a href="https://github.com/open-game-collective" className="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/open-game-system" className="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
                   GitHub
                 </a>
               </li>
@@ -70,7 +69,7 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="https://github.com/open-game-collective/trivia-jam" className="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/open-game-system/trivia-jam" className="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
                   Trivia Jam Source
                 </a>
               </li>
@@ -91,12 +90,12 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="https://github.com/open-game-collective" className="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/open-game-system" className="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
                   Open Source
                 </a>
               </li>
               <li>
-                <a href="https://github.com/open-game-collective/specification" className="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/open-game-system/specification" className="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
                   Specification
                 </a>
               </li>
@@ -106,7 +105,7 @@ const Footer = () => {
         
         <div className="mt-12 pt-8 border-t border-border text-center">
           <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} Open Game Collective. All rights reserved.
+            &copy; {new Date().getFullYear()} Open Game System. All rights reserved.
           </p>
         </div>
       </div>

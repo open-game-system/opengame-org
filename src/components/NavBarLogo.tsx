@@ -1,10 +1,10 @@
 import React from 'react';
 
-interface OGSSmallLogoProps {
+interface NavBarLogoProps {
   className?: string;
 }
 
-const OGSSmallLogo: React.FC<OGSSmallLogoProps> = ({ className = "" }) => {
+const NavBarLogo: React.FC<NavBarLogoProps> = ({ className = "" }) => {
   return (
     <img 
       src="/logo.svg" 
@@ -14,4 +14,4 @@ const OGSSmallLogo: React.FC<OGSSmallLogoProps> = ({ className = "" }) => {
   );
 };
 
-export default OGSSmallLogo;
+export default NavBarLogo; 

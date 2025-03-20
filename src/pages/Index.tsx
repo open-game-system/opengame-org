@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ArrowRight, Users, Bell, Tv, PlayCircle, User, Shield, Zap, Image as ImageIcon, ExternalLink, Github } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -12,27 +11,83 @@ import FAQAccordion from '@/components/FAQAccordion';
 import CodeSnippet from '@/components/CodeSnippet';
 import ImageGallery from '@/components/ImageGallery';
 import Footer from '@/components/Footer';
+import { Mermaid } from '@/components/ui/mermaid';
+import SimpleSequenceDiagram from '@/components/ui/SimpleSequenceDiagram';
+import SDKVisual from '@/components/SDKVisual';
 
 const Index = () => {
   // Sample code snippets
-  const installCode = `npm install @ogs/auth-kit @ogs/notification-kit @ogs/cast-kit`;
-  
-  const usageCode = `import { OGSAuthKit } from '@ogs/auth-kit';
+  const installCode = `# Install all kits
+npm install \\
+  @open-game-system/auth-kit \\
+  @open-game-system/notification-kit \\
+  @open-game-system/cast-kit
 
-// Initialize the SDK
-const authKit = new OGSAuthKit({
-  appId: 'your-app-id',
+# Or install individually as needed
+npm install @open-game-system/auth-kit`;
+  
+  const authKitCode = `import { createAuthClient } from '@open-game-system/auth-kit/client';
+
+// Initialize the auth client
+const authClient = createAuthClient({
+  gameId: 'your-game-id',
   apiKey: 'your-api-key'
 });
 
 // Link user account
-authKit.linkAccount()
-  .then((user) => {
-    console.log('User linked successfully', user);
+authClient.linkAccount()
+  .then((response) => {
+    console.log('User linked successfully', response.user);
   })
   .catch((error) => {
     console.error('Error linking account', error);
   });`;
+
+  const notificationKitCode = `import { createNotificationClient } from '@open-game-system/notification-kit/client';
+
+// Initialize the notification client
+const notificationClient = createNotificationClient({
+  gameId: 'your-game-id',
+  apiKey: 'your-api-key'
+});
+
+// Send a notification
+notificationClient.sendNotification({
+  recipient: { gameUserId: 'user-123' },
+  notification: {
+    type: 'your_turn',
+    title: 'Your Turn',
+    body: "Player 2 has made their move. It's your turn now!",
+    data: { gameId: 'game-456' },
+    deepLink: 'https://triviajam.tv/games/3f7a6d8c-1e9b-4f82-a7d5-8e91c6b4d712'
+  }
+})
+.then((result) => {
+  console.log('Notification sent:', result.id);
+})
+.catch((error) => {
+  console.error('Error sending notification:', error);
+});`;
+
+  const castKitCode = `import { createCastClient } from '@open-game-system/cast-kit/client';
+
+// Initialize the cast client
+const castClient = createCastClient();
+
+// Signal that the game is ready to cast
+castClient.signalReady({
+  gameId: 'your-game-id',
+  roomCode: 'room-123',
+  broadcastUrl: 'https://yourgame.com/tv?gameId=your-game-id&roomCode=room-123'
+});
+
+// Listen for cast state changes
+castClient.subscribe((state) => {
+  if (state.isCasting) {
+    console.log('Casting to:', state.deviceName);
+    // Switch to controller UI
+  }
+});`;
   
   // Demo screenshots of Trivia Jam - the example implementation
   const triviaJamImages = [
@@ -67,6 +122,91 @@ authKit.linkAccount()
     }
   ];
 
+  // Sample Mermaid diagrams
+  const accountLinkingDiagram = `
+sequenceDiagram
+    participant User
+    participant GameClient as Game Client
+    participant GameServer as Game Server
+    participant OGSProvider as OGS Provider API
+    participant OGSWeb as OGS Web UI
+    
+    User->>GameClient: Initiates account linking
+    GameClient->>GameServer: Request link token
+    GameServer->>OGSProvider: POST /api/v1/auth/account-link-token
+    Note over GameServer,OGSProvider: Includes game credentials<br>and user identifier
+    OGSProvider->>OGSProvider: Validates request<br>Generates link token
+    OGSProvider-->>GameServer: Returns link token
+    GameServer-->>GameClient: Returns link token
+    GameClient->>OGSWeb: Redirects to link account page<br>with link token
+    Note over GameClient,OGSWeb: GET /link-account?token=xyz123
+    OGSWeb->>OGSProvider: Validates token
+    OGSWeb->>User: Displays authentication UI
+    User->>OGSWeb: Authenticates with OGS
+    OGSWeb->>User: Displays confirmation UI
+    User->>OGSWeb: Confirms account linking
+    OGSWeb->>OGSProvider: Processes account linking
+    OGSProvider->>OGSProvider: Links accounts
+    OGSWeb-->>GameClient: Redirects back to game<br>with success parameter
+    Note over OGSWeb,GameClient: Redirect to redirectUrl?success=true
+    GameClient->>GameServer: Verifies link success
+    GameServer->>OGSProvider: POST /api/v1/auth/verify-link-token
+    OGSProvider-->>GameServer: Confirms link status
+    GameServer-->>GameClient: Updates UI to show linked status
+`;
+
+  const webAuthTokenDiagram = `
+sequenceDiagram
+    participant User
+    participant OGSApp as OGS Mobile App
+    participant GameWeb as Game Web Client
+    participant GameServer as Game Server
+    participant OGSProvider as OGS Provider API
+    
+    User->>OGSApp: Opens game in app
+    OGSApp->>OGSProvider: POST /api/v1/auth/web-code
+    Note over OGSApp,OGSProvider: Includes Authorization header<br>with session token
+    OGSProvider->>OGSProvider: Creates JWT with userId<br>(email included only if verified)
+    OGSProvider-->>OGSApp: Returns web auth code
+    OGSApp->>GameWeb: Open WebView with URL?code=xyz123
+    GameWeb->>GameServer: Request with code parameter
+    GameServer->>OGSProvider: POST /api/v1/auth/verify-token
+    Note over GameServer,OGSProvider: Sends token for verification
+    OGSProvider->>OGSProvider: Verifies token<br>Extracts user info
+    OGSProvider-->>GameServer: Returns user info
+    GameServer->>GameServer: Creates session for user
+    GameServer-->>GameWeb: Set auth cookies & redirect
+    GameWeb->>GameServer: Subsequent requests with cookies
+    GameServer-->>GameWeb: Return authenticated responses
+    GameWeb->>User: Display authenticated game content
+`;
+
+  const castingDiagram = `
+sequenceDiagram
+    participant User
+    participant Game as Game Client
+    participant GameServer as Game Server
+    participant OGSCast as OGS Cast API
+    participant TV as Chromecast Device
+    
+    User->>Game: Initiates cast
+    Game->>GameServer: Request cast session
+    GameServer->>OGSCast: POST /api/v1/cast/session
+    OGSCast->>OGSCast: Creates cast session
+    OGSCast->>TV: Initializes receiver app
+    OGSCast-->>GameServer: Returns session details
+    GameServer-->>Game: Returns cast session ID
+    Game->>Game: Switches to controller mode
+    
+    Note over User,TV: Gameplay Loop
+    
+    User->>Game: Controller input
+    Game->>OGSCast: POST /api/v1/cast/input
+    OGSCast->>TV: Forwards input
+    TV->>TV: Updates game state
+    TV->>User: Renders updated state
+`;
+
   return (
     <div className="flex flex-col min-h-screen">
       <NavBar />
@@ -93,7 +233,7 @@ authKit.linkAccount()
                   </a>
                 </Button>
                 <Button asChild variant="outline" size="lg">
-                  <a href="https://github.com/open-game-collective" target="_blank" rel="noopener noreferrer">
+                  <a href="https://github.com/open-game-system" target="_blank" rel="noopener noreferrer">
                     <Github className="mr-2 h-4 w-4" />
                     View on GitHub
                   </a>
@@ -163,18 +303,21 @@ authKit.linkAccount()
               description="Link user accounts between games and OGS platform for seamless identity management."
               icon={<User className="h-6 w-6 text-primary" />}
               delay={0}
+              href="#auth-kit-integration"
             />
             <SDKCard 
               title="notification-kit"
               description="Send and receive push notifications to keep players engaged, even when they're not actively playing."
               icon={<Bell className="h-6 w-6 text-primary" />}
               delay={200}
+              href="#notification-kit-integration"
             />
             <SDKCard 
               title="cast-kit"
               description="Enable TV casting capabilities, allowing players to display their games on larger screens."
               icon={<Tv className="h-6 w-6 text-primary" />}
               delay={400}
+              href="#cast-kit-integration"
             />
           </div>
         </div>
@@ -202,7 +345,7 @@ authKit.linkAccount()
               </Button>
               
               <Button asChild variant="outline">
-                <a href="https://github.com/open-game-collective/trivia-jam" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/open-game-system/trivia-jam" target="_blank" rel="noopener noreferrer">
                   View on GitHub <ExternalLink className="ml-2 h-4 w-4" />
                 </a>
               </Button>
@@ -217,94 +360,339 @@ authKit.linkAccount()
 
       {/* How It Works Section */}
       <section id="how-it-works" className="section-padding bg-secondary/50">
-        <div className="container mx-auto">
+        <div className="container mx-auto px-4">
           <SectionHeader 
             title="How It Works"
-            subtitle="OGS bridges your web game to native features through a simple architecture."
+            subtitle="OGS is designed to be protocol-based, web-first, and independent of your game's authentication system."
           />
           
-          <div className="mt-12 flex justify-center">
-            <div className="relative w-full max-w-3xl p-8 bg-card rounded-xl border border-border shadow-sm">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="text-center space-y-3">
-                  <div className="mx-auto w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
-                    <span className="text-2xl font-bold text-primary">1</span>
-                  </div>
-                  <h3 className="font-medium">Web Game</h3>
-                  <p className="text-sm text-muted-foreground">Your existing web game integrates OGS SDKs</p>
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6">
+              <div className="flex gap-4">
+                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <span className="text-xl font-bold text-primary">1</span>
                 </div>
-                
-                <div className="text-center space-y-3">
-                  <div className="mx-auto w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
-                    <span className="text-2xl font-bold text-primary">2</span>
-                  </div>
-                  <h3 className="font-medium">OGS Platform</h3>
-                  <p className="text-sm text-muted-foreground">Securely manages access to native device features</p>
-                </div>
-                
-                <div className="text-center space-y-3">
-                  <div className="mx-auto w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
-                    <span className="text-2xl font-bold text-primary">3</span>
-                  </div>
-                  <h3 className="font-medium">Native Features</h3>
-                  <p className="text-sm text-muted-foreground">Push notifications, TV casting, sensors, etc.</p>
+                <div>
+                  <h3 className="text-lg font-medium mb-2">Independent Integration</h3>
+                  <p className="text-muted-foreground">Install the SDK packages and integrate them with your existing game. Your game maintains its own identity and authentication system.</p>
                 </div>
               </div>
               
-              {/* Connecting lines */}
-              <div className="hidden md:block absolute top-1/2 left-1/3 w-1/3 h-0.5 bg-border transform -translate-y-1/2" />
-              <div className="hidden md:block absolute top-1/2 left-2/3 w-1/3 h-0.5 bg-border transform -translate-y-1/2" />
+              <div className="flex gap-4">
+                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <span className="text-xl font-bold text-primary">2</span>
+                </div>
+                <div>
+                  <h3 className="text-lg font-medium mb-2">Protocol-Based Communication</h3>
+                  <p className="text-muted-foreground">Your game communicates with the OGS platform using well-defined protocols. The server-to-server API enables secure feature access while maintaining web-first architecture.</p>
+                </div>
+              </div>
+              
+              <div className="flex gap-4">
+                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <span className="text-xl font-bold text-primary">3</span>
+                </div>
+                <div>
+                  <h3 className="text-lg font-medium mb-2">Native Platform Access</h3>
+                  <p className="text-muted-foreground">The OGS platform handles the complexity of communicating with native platforms, ensuring proper permissions, and delivering features like push notifications and TV casting.</p>
+                </div>
+              </div>
+              
+              <div className="flex gap-4">
+                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <span className="text-xl font-bold text-primary">4</span>
+                </div>
+                <div>
+                  <h3 className="text-lg font-medium mb-2">Cross-Platform Compatibility</h3>
+                  <p className="text-muted-foreground">Your game works seamlessly across iOS, Android, desktop browsers, and smart TVs. The OGS platform detects the device and provides the appropriate APIs.</p>
+                </div>
+              </div>
             </div>
+            
+            <div className="bg-card p-6 rounded-xl border border-border">
+              <h3 className="text-lg font-medium mb-4">System Architecture</h3>
+              <div className="w-full">
+                <Mermaid 
+                  chart={`
+flowchart TD
+    subgraph "Your Game"
+        GameServer[Game Server]
+        GameClient[Game Client]
+        AuthKit[auth-kit]
+        NotificationKit[notification-kit]
+        CastKit[cast-kit]
+    end
+    
+    subgraph "OGS System"
+        OGSAPI[OGS API]
+        OGSApp[OGS Mobile App]
+        OGSPlatform[OGS Platform]
+    end
+    
+    GameServer -->|Uses| AuthKit
+    GameServer -->|Uses| NotificationKit
+    GameClient -->|Uses| CastKit
+    
+    AuthKit -->|Communicates with| OGSAPI
+    NotificationKit -->|Sends notifications via| OGSAPI
+    CastKit -->|Communicates with| OGSApp
+    
+    OGSApp -->|Enables native features| OGSPlatform
+                  `} 
+                  className="bg-card p-4 rounded-lg" 
+                />
+              </div>
+              <div className="mt-4 text-sm text-muted-foreground">
+                <p>Each SDK operates independently, allowing you to implement only the features you need. The server-to-server communication ensures secure operations, while the client-side integration delivers a seamless user experience.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Protocol Examples Section */}
+      <section id="protocol-examples" className="section-padding">
+        <div className="container mx-auto px-4">
+          <SectionHeader 
+            title="Integration Guide"
+            subtitle="Step-by-step guides showing how to integrate each OGS kit into your web game."
+          />
+          
+          <div className="grid grid-cols-1 gap-16 mt-12">
+            <div id="auth-kit-integration">
+              <h3 className="text-xl font-bold mb-4 text-center">Auth Kit Integration</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                <div className="space-y-4">
+                  <div className="bg-card p-4 rounded-lg">
+                    <h4 className="font-medium mb-2">Step 1: Install the Package</h4>
+                    <CodeSnippet code={`npm install @open-game-system/auth-kit`} title="Terminal" />
+                  </div>
+                  
+                  <div className="bg-card p-4 rounded-lg">
+                    <h4 className="font-medium mb-2">Step 2: Initialize the Client</h4>
+                    <CodeSnippet code={`import { createAuthClient } from '@open-game-system/auth-kit/client';
+
+// Create auth client in your game's backend
+const authClient = createAuthClient({
+  gameId: 'your-game-id',
+  apiKey: 'your-api-key'
+});`} title="Server-side code" />
+                  </div>
+                  
+                  <div className="bg-card p-4 rounded-lg">
+                    <h4 className="font-medium mb-2">Step 3: Implement Account Linking</h4>
+                    <CodeSnippet code={`// Backend route to generate link token
+app.post('/api/link-account', async (req, res) => {
+  const { gameUserId } = req.body;
+  
+  try {
+    const linkData = await authClient.createLinkToken({
+      gameUserId,
+      redirectUrl: 'https://yourgame.com/auth/callback'
+    });
+    
+    res.json({ linkUrl: linkData.linkUrl });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Frontend code to redirect user
+function linkAccount() {
+  fetch('/api/link-account', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ gameUserId: 'user-123' })
+  })
+  .then(res => res.json())
+  .then(data => {
+    window.location.href = data.linkUrl;
+  });
+}`} title="Account linking implementation" />
+                  </div>
+                </div>
+                
+                <div>
+                  <h4 className="font-medium mb-4">Account Linking Flow</h4>
+                  <p className="text-muted-foreground mb-4">
+                    The Auth Kit enables users to link their game account with the OGS platform, 
+                    which is required for features like push notifications.
+                  </p>
+                  <SDKVisual type="auth" className="mt-4" />
+                </div>
+              </div>
+            </div>
+            
+            <div id="notification-kit-integration">
+              <h3 className="text-xl font-bold mb-4 text-center">Notification Kit Integration</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                <div className="space-y-4">
+                  <div className="bg-card p-4 rounded-lg">
+                    <h4 className="font-medium mb-2">Step 1: Install the Package</h4>
+                    <CodeSnippet code={`npm install @open-game-system/notification-kit`} title="Terminal" />
+                  </div>
+                  
+                  <div className="bg-card p-4 rounded-lg">
+                    <h4 className="font-medium mb-2">Step 2: Initialize the Client</h4>
+                    <CodeSnippet code={`import { createNotificationClient } from '@open-game-system/notification-kit/client';
+
+// Create notification client in your game's backend
+const notificationClient = createNotificationClient({
+  gameId: 'your-game-id',
+  apiKey: 'your-api-key'  // Keep this secure on your server
+});`} title="Server-side code" />
+                  </div>
+                  
+                  <div className="bg-card p-4 rounded-lg">
+                    <h4 className="font-medium mb-2">Step 3: Send Notifications</h4>
+                    <CodeSnippet code={`// Backend route to send a notification
+app.post('/api/send-notification', async (req, res) => {
+  const { userId, title, message, data } = req.body;
+  
+  try {
+    const result = await notificationClient.sendNotification({
+      recipient: { gameUserId: userId },
+      notification: {
+        type: 'your_turn',
+        title: 'Your Turn',
+        body: "Player 2 has made their move. It's your turn now!",
+        data: data,
+        deepLink: \`https://yourgame.com/games/\${data.gameId}\`
+      }
+    });
+    
+    res.json({ id: result.id, status: result.status });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});`} title="Notification sending implementation" />
+                  </div>
+                </div>
+                
+                <div>
+                  <h4 className="font-medium mb-4">Push Notification Flow</h4>
+                  <p className="text-muted-foreground mb-4">
+                    The Notification Kit lets you send push notifications to users even when they're not 
+                    actively playing your game, increasing engagement.
+                  </p>
+                  <SDKVisual type="notification" className="mt-4" />
+                </div>
+              </div>
+            </div>
+            
+            <div id="cast-kit-integration">
+              <h3 className="text-xl font-bold mb-4 text-center">Cast Kit Integration</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                <div className="space-y-4">
+                  <div className="bg-card p-4 rounded-lg">
+                    <h4 className="font-medium mb-2">Step 1: Install the Package</h4>
+                    <CodeSnippet code={`npm install @open-game-system/cast-kit`} title="Terminal" />
+                  </div>
+                  
+                  <div className="bg-card p-4 rounded-lg">
+                    <h4 className="font-medium mb-2">Step 2: Initialize the Client</h4>
+                    <CodeSnippet code={`import { createCastClient } from '@open-game-system/cast-kit/client';
+
+// Create cast client in your game's frontend
+const castClient = createCastClient({
+  gameId: 'your-game-id'
+});
+
+// Listen for cast state changes
+castClient.subscribe((state) => {
+  if (state.isCasting) {
+    // Switch to controller UI
+    showControllerUI();
+  } else {
+    // Show normal game UI
+    showGameUI();
+  }
+});`} title="Client-side code" />
+                  </div>
+                  
+                  <div className="bg-card p-4 rounded-lg">
+                    <h4 className="font-medium mb-2">Step 3: Implement Casting</h4>
+                    <CodeSnippet code={`// Button to start casting
+document.getElementById('cast-button').addEventListener('click', () => {
+  // Signal that the game is ready to cast
+  castClient.startCasting({
+    roomCode: 'game-123',
+    gameUrl: 'https://yourgame.com/tv?mode=cast&roomCode=game-123'
+  });
+});
+
+// Send controller input when casting
+function sendControllerInput(action, data) {
+  if (castClient.getState().isCasting) {
+    castClient.sendInput({
+      action: action,
+      data: data
+    });
+  }
+}`} title="Casting implementation" />
+                  </div>
+                </div>
+                
+                <div>
+                  <h4 className="font-medium mb-4">TV Casting Flow</h4>
+                  <p className="text-muted-foreground mb-4">
+                    The Cast Kit lets players display your game on larger screens like TVs, 
+                    while using their phones as controllers. This works independently of other kits.
+                  </p>
+                  <SDKVisual type="cast" className="mt-4" />
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="mt-16 text-center">
+            <p className="text-lg text-muted-foreground mb-6">Each kit can be used independently, so you can implement only the features your game needs.</p>
+            <Button asChild className="bg-primary hover:bg-primary/90">
+              <a href="https://github.com/open-game-system/specification" target="_blank" rel="noopener noreferrer">
+                View Full API Reference <ExternalLink className="ml-2 h-4 w-4" />
+              </a>
+            </Button>
           </div>
         </div>
       </section>
 
       {/* Get Started Section */}
       <section id="get-started" className="section-padding bg-secondary/50">
-        <div className="container mx-auto">
+        <div className="container mx-auto px-4">
           <SectionHeader 
             title="Get Started"
-            subtitle="Integrate OGS into your web game in minutes."
+            subtitle="Begin your OGS integration journey"
           />
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-12">
-            <div>
-              <div className="space-y-6">
-                <div className="flex items-start space-x-4">
-                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
-                    <span className="text-primary font-bold">1</span>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-medium mb-2">Install OGS SDKs</h3>
-                    <p className="text-muted-foreground mb-4">Add OGS SDKs to your project using npm or yarn.</p>
-                    <CodeSnippet code={installCode} title="Terminal" />
-                  </div>
-                </div>
-                
-                <div className="flex items-start space-x-4">
-                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
-                    <span className="text-primary font-bold">2</span>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-medium mb-2">Initialize the SDK</h3>
-                    <p className="text-muted-foreground mb-4">Configure the SDK with your API keys and settings.</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start space-x-4">
-                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
-                    <span className="text-primary font-bold">3</span>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-medium mb-2">Use Native Features</h3>
-                    <p className="text-muted-foreground mb-4">Access native capabilities through simple API calls.</p>
-                  </div>
-                </div>
+          <div className="mt-12">
+            <div className="bg-card p-6 rounded-xl border border-border max-w-4xl mx-auto">
+              <h3 className="text-xl font-bold mb-6 text-center">Start Building With OGS</h3>
+              
+              <div className="text-center mb-8">
+                <p className="text-lg mb-6">
+                  OGS is an open-source project that enables web games to access native device capabilities. 
+                  Get started by exploring our GitHub repositories and documentation.
+                </p>
+                <p className="text-muted-foreground mb-8">
+                  Our SDKs are designed to be modular and easy to integrate into existing web games. 
+                  Check out the source code, example implementations, and contribute to the project.
+                </p>
               </div>
-            </div>
-            
-            <div>
-              <CodeSnippet code={usageCode} title="Example: Linking User Account" className="h-full" />
+              
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Button asChild className="bg-primary hover:bg-primary/90">
+                  <a href="https://github.com/open-game-system" target="_blank" rel="noopener noreferrer" className="flex items-center">
+                    <Github className="mr-2 h-4 w-4" />
+                    GitHub Organization
+                  </a>
+                </Button>
+                <Button asChild variant="outline">
+                  <a href="https://github.com/open-game-system/specification" target="_blank" rel="noopener noreferrer" className="flex items-center">
+                    <ArrowRight className="mr-2 h-4 w-4" />
+                    View Specification
+                  </a>
+                </Button>
+              </div>
             </div>
           </div>
         </div>
