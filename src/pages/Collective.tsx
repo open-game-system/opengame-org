@@ -26,15 +26,6 @@ const Collective = () => {
     // Room for more contributors to be added here
   ];
 
-  const advisors: CollectiveMember[] = [
-    {
-      username: 'octanebaby',
-      role: 'Advisor',
-      memberType: 'advisor',
-    },
-    // Room for more advisors to be added
-  ];
-
   // Filter members by type
   const activeContributors = members.filter(member => member.memberType === 'contributor');
 
@@ -250,61 +241,10 @@ const Collective = () => {
                     className="flex items-center"
                   >
                     <Github className="mr-2 h-4 w-4" />
-                    GitHub Profile
+                    Join the Discussions
                   </a>
                 </Button>
               </div>
-            </div>
-            
-            <h3 className="text-xl font-bold mb-6 text-center">Advisors</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-              {advisors.map((advisor) => (
-                <div 
-                  key={advisor.username} 
-                  className="flex flex-col items-center p-6 border border-border rounded-lg bg-card hover:shadow-md transition-shadow"
-                >
-                  <div className="w-24 h-24 mb-4 overflow-hidden rounded-full border-2 border-primary/70">
-                    <img 
-                      src={`https://github.com/${advisor.username}.png`} 
-                      alt={`${advisor.username}'s avatar`}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        // Fallback if GitHub avatar can't be loaded
-                        (e.target as HTMLImageElement).src = 'https://github.com/identicons/github.png';
-                      }}
-                    />
-                  </div>
-                  <h3 className="text-xl font-bold mb-2">{advisor.username}</h3>
-                  <p className="text-sm text-primary/80 mb-4">{advisor.role}</p>
-                  <Button variant="ghost" size="sm" asChild>
-                    <a 
-                      href={`https://github.com/${advisor.username}`} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="flex items-center"
-                    >
-                      <Github className="mr-2 h-4 w-4" />
-                      GitHub Profile
-                    </a>
-                  </Button>
-                </div>
-              ))}
-              
-              {/* Two empty advisor spots */}
-              {[1, 2].map((idx) => (
-                <div 
-                  key={idx} 
-                  className="flex flex-col items-center p-6 border border-dashed border-border rounded-lg bg-card/30 hover:bg-card/40 transition-colors justify-center"
-                >
-                  <div className="w-24 h-24 mb-4 overflow-hidden rounded-full border-2 border-dashed border-primary/30 flex items-center justify-center bg-black/50">
-                    <Users className="h-10 w-10 text-primary/30" />
-                  </div>
-                  <p className="text-lg font-medium text-muted-foreground">Coming Soon</p>
-                  <p className="text-sm text-muted-foreground/70 mb-4 text-center">
-                    Industry expert providing strategic guidance
-                  </p>
-                </div>
-              ))}
             </div>
 
             <div className="bg-card border border-border rounded-lg p-8 mb-12">
