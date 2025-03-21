@@ -26,7 +26,7 @@ const NavBar = () => {
       isScrolled ? 'bg-background/80 backdrop-blur-md shadow-sm' : ''
     }`}>
       <div className="container flex justify-between items-center py-4">
-        <a href="#" className="flex items-center space-x-2">
+        <a href="/" className="flex items-center space-x-2">
           <span className="font-orbitron text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-ogs-purple to-ogs-light-purple">
             OGS
           </span>
@@ -34,22 +34,22 @@ const NavBar = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
-          <a href="#about" className="text-sm font-medium hover:text-primary transition-colors">
+          <a href="/#about" className="text-sm font-medium hover:text-primary transition-colors">
             What is OGS?
           </a>
-          <a href="#components" className="text-sm font-medium hover:text-primary transition-colors">
+          <a href="/#components" className="text-sm font-medium hover:text-primary transition-colors">
             Core Components
           </a>
-          <a href="#how-it-works" className="text-sm font-medium hover:text-primary transition-colors">
+          <a href="/#how-it-works" className="text-sm font-medium hover:text-primary transition-colors">
             How It Works
           </a>
-          <a href="#protocol-examples" className="text-sm font-medium hover:text-primary transition-colors">
+          <a href="/#protocol-examples" className="text-sm font-medium hover:text-primary transition-colors">
             Protocol Examples
           </a>
-          <a href="#get-started" className="text-sm font-medium hover:text-primary transition-colors">
+          <a href="/#get-started" className="text-sm font-medium hover:text-primary transition-colors">
             Get Started
           </a>
-          <a href="#faq" className="text-sm font-medium hover:text-primary transition-colors">
+          <a href="/#faq" className="text-sm font-medium hover:text-primary transition-colors">
             FAQ
           </a>
           <a href="/collective" className="text-sm font-medium hover:text-primary transition-colors">
@@ -83,42 +83,42 @@ const NavBar = () => {
         <div className="md:hidden absolute top-full left-0 right-0 bg-background border-b border-border animate-fade-in">
           <nav className="container flex flex-col space-y-4 py-6">
             <a 
-              href="#about" 
+              href="/#about" 
               className="text-base font-medium hover:text-primary transition-colors py-2"
               onClick={() => setIsMenuOpen(false)}
             >
               What is OGS?
             </a>
             <a 
-              href="#components" 
+              href="/#components" 
               className="text-base font-medium hover:text-primary transition-colors py-2"
               onClick={() => setIsMenuOpen(false)}
             >
               Core Components
             </a>
             <a 
-              href="#how-it-works" 
+              href="/#how-it-works" 
               className="text-base font-medium hover:text-primary transition-colors py-2"
               onClick={() => setIsMenuOpen(false)}
             >
               How It Works
             </a>
             <a 
-              href="#protocol-examples" 
+              href="/#protocol-examples" 
               className="text-base font-medium hover:text-primary transition-colors py-2"
               onClick={() => setIsMenuOpen(false)}
             >
               Protocol Examples
             </a>
             <a 
-              href="#get-started" 
+              href="/#get-started" 
               className="text-base font-medium hover:text-primary transition-colors py-2"
               onClick={() => setIsMenuOpen(false)}
             >
               Get Started
             </a>
             <a 
-              href="#faq" 
+              href="/#faq" 
               className="text-base font-medium hover:text-primary transition-colors py-2"
               onClick={() => setIsMenuOpen(false)}
             >

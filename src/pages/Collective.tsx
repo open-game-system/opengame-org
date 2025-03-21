@@ -43,15 +43,15 @@ const Collective = () => {
                 className="w-full h-full"
               />
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold font-orbitron mb-6 text-white">
+            <h1 className="text-4xl md:text-5xl font-bold font-orbitron mb-6 text-foreground">
               Open Game Collective
             </h1>
-            <p className="text-xl mb-6 text-muted-foreground">
+            <p className="text-xl mb-6 text-foreground">
               A small group of open source developers dedicated to advancing and maintaining open technologies for web gaming
             </p>
             
             <div className="flex flex-col items-center justify-center mb-8">
-              <span className="text-lg mb-3 text-muted-foreground">Publishers of</span>
+              <span className="text-lg mb-3 text-foreground">Publishers of</span>
               <div className="w-32 h-32">
                 <OGSLogo />
               </div>
@@ -75,14 +75,14 @@ const Collective = () => {
 
           <div className="max-w-4xl mx-auto">
             <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">Our Mission</h2>
-            <p className="text-lg mb-6 text-center">
+            <p className="text-lg mb-6 text-center text-foreground">
               We're building tools that enable web game developers to access native device features without 
               sacrificing the web-first nature of their games. Our goal is to create an open ecosystem that 
               benefits the entire gaming community.
             </p>
             <div className="bg-card border border-border rounded-lg p-8 mb-12">
               <h3 className="text-xl font-bold mb-4 text-center">Launch Faster, Reach Further</h3>
-              <p className="text-muted-foreground mb-4">
+              <p className="text-foreground mb-4">
                 The Open Game System helps developers get to market faster by eliminating the traditional overhead 
                 of app store distribution. Your game remains a web app at its core, but gains access to powerful native features.
               </p>
@@ -94,7 +94,7 @@ const Collective = () => {
                   </div>
                   <div>
                     <h4 className="font-bold mb-2">Web-First, Native-Enhanced</h4>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-foreground">
                       Build your game as a web application first, using familiar web technologies. Then seamlessly add native 
                       capabilities like push notifications and TV casting without compromising your web-first architecture.
                     </p>
@@ -107,7 +107,7 @@ const Collective = () => {
                   </div>
                   <div>
                     <h4 className="font-bold mb-2">Open Game App</h4>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-foreground">
                       Our Open Game App is already deployed and ready to use. It provides a 
                       container for your web game to access native features without requiring custom app development or app store approval.
                     </p>
@@ -117,7 +117,7 @@ const Collective = () => {
               
               <div className="flex items-center justify-center">
                 <Zap className="h-5 w-5 text-primary mr-2" />
-                <p className="text-muted-foreground">
+                <p className="text-foreground">
                   Write your game once for the web, and it automatically works with native features.
                 </p>
               </div>
@@ -127,7 +127,7 @@ const Collective = () => {
             <div className="bg-card border border-border rounded-lg p-8 mb-16">
               <div className="mb-8">
                 <h3 className="text-xl font-bold mb-3">Free Tier for Indie Developers</h3>
-                <p className="text-muted-foreground mb-4">
+                <p className="text-foreground mb-4">
                   The Open Game Collective offers a completely free tier for indie developers and small studios.
                   This includes basic access to notifications, which are relatively inexpensive and subsidized by the collective.
                 </p>
@@ -136,7 +136,7 @@ const Collective = () => {
                     <Rocket className="h-5 w-5 text-primary mr-2" />
                     Benefits Beyond the Free Services
                   </h4>
-                  <ul className="list-none space-y-3 text-sm text-muted-foreground">
+                  <ul className="list-none space-y-3 text-sm text-foreground">
                     <li className="flex items-start">
                       <span className="inline-block mr-2 text-primary">✓</span>
                       <span><span className="font-medium">Skip app store review processes</span> — Launch immediately without waiting for approval</span>
@@ -159,14 +159,14 @@ const Collective = () => {
               
               <div className="mb-8">
                 <h3 className="text-xl font-bold mb-3">Transparent Cost Structure</h3>
-                <p className="text-muted-foreground mb-4">
+                <p className="text-foreground mb-4">
                   For larger projects, costs are primarily associated with:
                 </p>
-                <ul className="list-disc pl-6 space-y-2 text-muted-foreground mb-4">
+                <ul className="list-disc pl-6 space-y-2 text-foreground mb-4">
                   <li><span className="font-medium">Rendering servers</span> — The computing resources required to run your game logic on our servers</li>
                   <li><span className="font-medium">WebRTC streaming</span> — The bandwidth and infrastructure needed to stream content to Chromecast devices</li>
                 </ul>
-                <p className="text-muted-foreground">
+                <p className="text-foreground">
                   We believe in full transparency. The costs you pay directly reflect the actual infrastructure expenses
                   we incur to provide these services, without arbitrary markups. Your game is always hosted on your own domain.
                 </p>
@@ -174,10 +174,10 @@ const Collective = () => {
               
               <div>
                 <h3 className="text-xl font-bold mb-3">Custom Pricing Plans</h3>
-                <p className="text-muted-foreground mb-4">
+                <p className="text-foreground mb-4">
                   For projects beyond the free tier, we work directly with you to develop a custom plan that:
                 </p>
-                <ul className="list-disc pl-6 space-y-2 text-muted-foreground mb-4">
+                <ul className="list-disc pl-6 space-y-2 text-foreground mb-4">
                   <li>Matches your projected usage and scale</li>
                   <li>Provides predictable pricing based on your specific needs</li>
                   <li>Scales efficiently as your user base grows</li>
@@ -231,8 +231,8 @@ const Collective = () => {
               
               {/* Placeholder for future contributors */}
               <div className="flex flex-col items-center justify-center p-6 border border-dashed border-border rounded-lg bg-card/50 hover:bg-card/80 transition-colors">
-                <p className="text-lg font-medium text-muted-foreground mb-2">Could be you</p>
-                <p className="text-sm text-muted-foreground mb-4">Want to help build the future of web gaming?</p>
+                <p className="text-lg font-medium text-foreground mb-2">Could be you</p>
+                <p className="text-sm text-foreground mb-4">Want to help build the future of web gaming?</p>
                 <Button variant="outline" size="sm" asChild>
                   <a 
                     href="https://github.com/orgs/open-game-system/discussions" 
@@ -249,7 +249,7 @@ const Collective = () => {
 
             <div className="bg-card border border-border rounded-lg p-8 mb-12">
               <h3 className="text-xl font-bold mb-6 text-center">Join The Collective</h3>
-              <p className="text-center text-muted-foreground mb-6">
+              <p className="text-center text-foreground mb-6">
                 We're a small but dedicated group of developers working to create an open ecosystem for web games.
                 If you're passionate about web gaming and open source, we'd love to have you join us!
               </p>
