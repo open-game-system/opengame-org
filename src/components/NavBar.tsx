@@ -52,6 +52,9 @@ const NavBar = () => {
           <a href="#faq" className="text-sm font-medium hover:text-primary transition-colors">
             FAQ
           </a>
+          <a href="/collective" className="text-sm font-medium hover:text-primary transition-colors">
+            Collective
+          </a>
           <ThemeToggle />
           <Button asChild className="bg-primary hover:bg-primary/90">
             <a href="https://github.com/open-game-system" target="_blank" rel="noopener noreferrer">
@@ -120,6 +123,13 @@ const NavBar = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               FAQ
+            </a>
+            <a 
+              href="/collective" 
+              className="text-base font-medium hover:text-primary transition-colors py-2"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Collective
             </a>
             <Button asChild className="bg-primary hover:bg-primary/90 w-full">
               <a href="https://github.com/open-game-system" target="_blank" rel="noopener noreferrer">

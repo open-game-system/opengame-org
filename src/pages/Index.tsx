@@ -122,90 +122,88 @@ castClient.subscribe((state) => {
     }
   ];
 
-  // Sample Mermaid diagrams
-  const accountLinkingDiagram = `
-sequenceDiagram
-    participant User
-    participant GameClient as Game Client
-    participant GameServer as Game Server
-    participant OGSProvider as OGS Provider API
-    participant OGSWeb as OGS Web UI
-    
-    User->>GameClient: Initiates account linking
-    GameClient->>GameServer: Request link token
-    GameServer->>OGSProvider: POST /api/v1/auth/account-link-token
-    Note over GameServer,OGSProvider: Includes game credentials<br>and user identifier
-    OGSProvider->>OGSProvider: Validates request<br>Generates link token
-    OGSProvider-->>GameServer: Returns link token
-    GameServer-->>GameClient: Returns link token
-    GameClient->>OGSWeb: Redirects to link account page<br>with link token
-    Note over GameClient,OGSWeb: GET /link-account?token=xyz123
-    OGSWeb->>OGSProvider: Validates token
-    OGSWeb->>User: Displays authentication UI
-    User->>OGSWeb: Authenticates with OGS
-    OGSWeb->>User: Displays confirmation UI
-    User->>OGSWeb: Confirms account linking
-    OGSWeb->>OGSProvider: Processes account linking
-    OGSProvider->>OGSProvider: Links accounts
-    OGSWeb-->>GameClient: Redirects back to game<br>with success parameter
-    Note over OGSWeb,GameClient: Redirect to redirectUrl?success=true
-    GameClient->>GameServer: Verifies link success
-    GameServer->>OGSProvider: POST /api/v1/auth/verify-link-token
-    OGSProvider-->>GameServer: Confirms link status
-    GameServer-->>GameClient: Updates UI to show linked status
-`;
+  // Account linking sequence diagram entities and messages
+  const accountLinkingEntities = [
+    { id: 'user', label: 'User' },
+    { id: 'gameClient', label: 'Game Client' },
+    { id: 'gameServer', label: 'Game Server' },
+    { id: 'ogsProvider', label: 'OGS Provider API' },
+    { id: 'ogsWeb', label: 'OGS Web UI' }
+  ];
 
-  const webAuthTokenDiagram = `
-sequenceDiagram
-    participant User
-    participant OGSApp as OGS Mobile App
-    participant GameWeb as Game Web Client
-    participant GameServer as Game Server
-    participant OGSProvider as OGS Provider API
-    
-    User->>OGSApp: Opens game in app
-    OGSApp->>OGSProvider: POST /api/v1/auth/web-code
-    Note over OGSApp,OGSProvider: Includes Authorization header<br>with session token
-    OGSProvider->>OGSProvider: Creates JWT with userId<br>(email included only if verified)
-    OGSProvider-->>OGSApp: Returns web auth code
-    OGSApp->>GameWeb: Open WebView with URL?code=xyz123
-    GameWeb->>GameServer: Request with code parameter
-    GameServer->>OGSProvider: POST /api/v1/auth/verify-token
-    Note over GameServer,OGSProvider: Sends token for verification
-    OGSProvider->>OGSProvider: Verifies token<br>Extracts user info
-    OGSProvider-->>GameServer: Returns user info
-    GameServer->>GameServer: Creates session for user
-    GameServer-->>GameWeb: Set auth cookies & redirect
-    GameWeb->>GameServer: Subsequent requests with cookies
-    GameServer-->>GameWeb: Return authenticated responses
-    GameWeb->>User: Display authenticated game content
-`;
+  const accountLinkingMessages = [
+    { from: 'user', to: 'gameClient', label: 'Initiates account linking' },
+    { from: 'gameClient', to: 'gameServer', label: 'Request link token' },
+    { from: 'gameServer', to: 'ogsProvider', label: 'POST /api/v1/auth/account-link-token' },
+    { from: 'ogsProvider', to: 'ogsProvider', label: 'Validates request & generates token' },
+    { from: 'ogsProvider', to: 'gameServer', label: 'Returns link token', direction: 'backward' as const },
+    { from: 'gameServer', to: 'gameClient', label: 'Returns link token', direction: 'backward' as const },
+    { from: 'gameClient', to: 'ogsWeb', label: 'Redirects to link account page' },
+    { from: 'ogsWeb', to: 'ogsProvider', label: 'Validates token' },
+    { from: 'ogsWeb', to: 'user', label: 'Displays authentication UI' },
+    { from: 'user', to: 'ogsWeb', label: 'Authenticates with OGS' },
+    { from: 'ogsWeb', to: 'user', label: 'Displays confirmation UI' },
+    { from: 'user', to: 'ogsWeb', label: 'Confirms account linking' },
+    { from: 'ogsWeb', to: 'ogsProvider', label: 'Processes account linking' },
+    { from: 'ogsProvider', to: 'ogsProvider', label: 'Links accounts' },
+    { from: 'ogsWeb', to: 'gameClient', label: 'Redirects back to game', direction: 'backward' as const },
+    { from: 'gameClient', to: 'gameServer', label: 'Verifies link success' },
+    { from: 'gameServer', to: 'ogsProvider', label: 'POST /api/v1/auth/verify-link-token' },
+    { from: 'ogsProvider', to: 'gameServer', label: 'Confirms link status', direction: 'backward' as const },
+    { from: 'gameServer', to: 'gameClient', label: 'Updates UI to show linked status', direction: 'backward' as const }
+  ];
 
-  const castingDiagram = `
-sequenceDiagram
-    participant User
-    participant Game as Game Client
-    participant GameServer as Game Server
-    participant OGSCast as OGS Cast API
-    participant TV as Chromecast Device
-    
-    User->>Game: Initiates cast
-    Game->>GameServer: Request cast session
-    GameServer->>OGSCast: POST /api/v1/cast/session
-    OGSCast->>OGSCast: Creates cast session
-    OGSCast->>TV: Initializes receiver app
-    OGSCast-->>GameServer: Returns session details
-    GameServer-->>Game: Returns cast session ID
-    Game->>Game: Switches to controller mode
-    
-    Note over User,TV: Gameplay Loop
-    
-    User->>Game: Controller input
-    Game->>OGSCast: POST /api/v1/cast/input
-    OGSCast->>TV: Forwards input
-    TV->>TV: Updates game state
-    TV->>User: Renders updated state
-`;
+  // Web auth token diagram entities and messages
+  const webAuthTokenEntities = [
+    { id: 'user', label: 'User' },
+    { id: 'ogsApp', label: 'OGS Mobile App' },
+    { id: 'gameWeb', label: 'Game Web Client' },
+    { id: 'gameServer', label: 'Game Server' },
+    { id: 'ogsProvider', label: 'OGS Provider API' }
+  ];
+
+  const webAuthTokenMessages = [
+    { from: 'user', to: 'ogsApp', label: 'Opens game in app' },
+    { from: 'ogsApp', to: 'ogsProvider', label: 'POST /api/v1/auth/web-code' },
+    { from: 'ogsProvider', to: 'ogsProvider', label: 'Creates JWT with userId' },
+    { from: 'ogsProvider', to: 'ogsApp', label: 'Returns web auth code', direction: 'backward' as const },
+    { from: 'ogsApp', to: 'gameWeb', label: 'Open WebView with URL?code=xyz123' },
+    { from: 'gameWeb', to: 'gameServer', label: 'Request with code parameter' },
+    { from: 'gameServer', to: 'ogsProvider', label: 'POST /api/v1/auth/verify-token' },
+    { from: 'ogsProvider', to: 'ogsProvider', label: 'Verifies token & extracts user info' },
+    { from: 'ogsProvider', to: 'gameServer', label: 'Returns user info', direction: 'backward' as const },
+    { from: 'gameServer', to: 'gameServer', label: 'Creates session for user' },
+    { from: 'gameServer', to: 'gameWeb', label: 'Set auth cookies & redirect', direction: 'backward' as const },
+    { from: 'gameWeb', to: 'gameServer', label: 'Subsequent requests with cookies' },
+    { from: 'gameServer', to: 'gameWeb', label: 'Return authenticated responses', direction: 'backward' as const },
+    { from: 'gameWeb', to: 'user', label: 'Display authenticated game content' }
+  ];
+
+  // Casting diagram entities and messages
+  const castingEntities = [
+    { id: 'user', label: 'User' },
+    { id: 'game', label: 'Game Client' },
+    { id: 'gameServer', label: 'Game Server' },
+    { id: 'ogsCast', label: 'OGS Cast API' },
+    { id: 'tv', label: 'Chromecast Device' }
+  ];
+
+  const castingMessages = [
+    { from: 'user', to: 'game', label: 'Initiates cast' },
+    { from: 'game', to: 'gameServer', label: 'Request cast session' },
+    { from: 'gameServer', to: 'ogsCast', label: 'POST /api/v1/cast/session' },
+    { from: 'ogsCast', to: 'ogsCast', label: 'Creates cast session' },
+    { from: 'ogsCast', to: 'tv', label: 'Initializes receiver app' },
+    { from: 'ogsCast', to: 'gameServer', label: 'Returns session details', direction: 'backward' as const },
+    { from: 'gameServer', to: 'game', label: 'Returns cast session ID', direction: 'backward' as const },
+    { from: 'game', to: 'game', label: 'Switches to controller mode' },
+    // Gameplay loop
+    { from: 'user', to: 'game', label: 'Controller input' },
+    { from: 'game', to: 'ogsCast', label: 'POST /api/v1/cast/input' },
+    { from: 'ogsCast', to: 'tv', label: 'Forwards input' },
+    { from: 'tv', to: 'tv', label: 'Updates game state' },
+    { from: 'tv', to: 'user', label: 'Renders updated state' }
+  ];
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -518,7 +516,14 @@ function linkAccount() {
                     The Auth Kit enables users to link their game account with the OGS platform, 
                     which is required for features like push notifications.
                   </p>
-                  <SDKVisual type="auth" className="mt-4" />
+                  <div className="bg-card p-4 rounded-lg mt-4 border border-border">
+                    <SimpleSequenceDiagram
+                      entities={accountLinkingEntities}
+                      messages={accountLinkingMessages}
+                      title="Account Linking Sequence"
+                    />
+                  </div>
+                  <SDKVisual type="auth" className="mt-6" />
                 </div>
               </div>
             </div>
@@ -575,7 +580,14 @@ app.post('/api/send-notification', async (req, res) => {
                     The Notification Kit lets you send push notifications to users even when they're not 
                     actively playing your game, increasing engagement.
                   </p>
-                  <SDKVisual type="notification" className="mt-4" />
+                  <div className="bg-card p-4 rounded-lg mt-4 border border-border">
+                    <SimpleSequenceDiagram
+                      entities={webAuthTokenEntities}
+                      messages={webAuthTokenMessages}
+                      title="Web Authentication Sequence"
+                    />
+                  </div>
+                  <SDKVisual type="notification" className="mt-6" />
                 </div>
               </div>
             </div>
@@ -639,7 +651,14 @@ function sendControllerInput(action, data) {
                     The Cast Kit lets players display your game on larger screens like TVs, 
                     while using their phones as controllers. This works independently of other kits.
                   </p>
-                  <SDKVisual type="cast" className="mt-4" />
+                  <div className="bg-card p-4 rounded-lg mt-4 border border-border">
+                    <SimpleSequenceDiagram
+                      entities={castingEntities}
+                      messages={castingMessages}
+                      title="TV Casting Sequence"
+                    />
+                  </div>
+                  <SDKVisual type="cast" className="mt-6" />
                 </div>
               </div>
             </div>
