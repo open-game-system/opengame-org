@@ -40,11 +40,17 @@ const NavBar = () => {
           <a href="/#components" className="text-sm font-medium hover:text-primary transition-colors">
             Core Components
           </a>
+          <a href="/#ogs-app" className="text-sm font-medium hover:text-primary transition-colors">
+            OGS App
+          </a>
+          <a href="/#open-game-services" className="text-sm font-medium hover:text-primary transition-colors">
+            Services
+          </a>
           <a href="/#how-it-works" className="text-sm font-medium hover:text-primary transition-colors">
             How It Works
           </a>
           <a href="/#protocol-examples" className="text-sm font-medium hover:text-primary transition-colors">
-            Protocol Examples
+            SDK Integration
           </a>
           <a href="/#get-started" className="text-sm font-medium hover:text-primary transition-colors">
             Get Started
@@ -97,6 +103,20 @@ const NavBar = () => {
               Core Components
             </a>
             <a 
+              href="/#ogs-app" 
+              className="text-base font-medium hover:text-primary transition-colors py-2"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              OGS App
+            </a>
+            <a 
+              href="/#open-game-services" 
+              className="text-base font-medium hover:text-primary transition-colors py-2"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Services
+            </a>
+            <a 
               href="/#how-it-works" 
               className="text-base font-medium hover:text-primary transition-colors py-2"
               onClick={() => setIsMenuOpen(false)}
@@ -108,7 +128,7 @@ const NavBar = () => {
               className="text-base font-medium hover:text-primary transition-colors py-2"
               onClick={() => setIsMenuOpen(false)}
             >
-              Protocol Examples
+              SDK Integration
             </a>
             <a 
               href="/#get-started" 

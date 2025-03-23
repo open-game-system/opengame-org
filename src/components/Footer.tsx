@@ -1,5 +1,5 @@
 import React from 'react';
-import { Github, Mail, Link, Globe } from 'lucide-react';
+import { Github, Mail, Link, Globe, Twitter, MessageSquare } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -14,6 +14,12 @@ const Footer = () => {
             <div className="flex space-x-4">
               <a href="https://github.com/open-game-system" className="text-muted-foreground hover:text-primary transition-colors" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
                 <Github className="h-5 w-5" />
+              </a>
+              <a href="https://twitter.com/OpenGameCo" className="text-muted-foreground hover:text-primary transition-colors" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
+                <Twitter className="h-5 w-5" />
+              </a>
+              <a href="https://discord.gg/opengamesystem" className="text-muted-foreground hover:text-primary transition-colors" aria-label="Discord" target="_blank" rel="noopener noreferrer">
+                <MessageSquare className="h-5 w-5" />
               </a>
               <a href="https://opengame.org" className="text-muted-foreground hover:text-primary transition-colors" aria-label="Website" target="_blank" rel="noopener noreferrer">
                 <Globe className="h-5 w-5" />

@@ -50,7 +50,7 @@ export const SimpleSequenceDiagram: React.FC<SimpleSequenceDiagramProps> = ({
   return (
     <div className={`sequence-diagram ${className}`}>
       {title && <h4 className="font-medium mb-3 text-foreground">{title}</h4>}
-      <div className="w-full overflow-x-auto">
+      <div className="w-full overflow-x-auto bg-card rounded-md border border-border">
         <svg 
           width={svgWidth} 
           height={totalHeight}
@@ -58,13 +58,13 @@ export const SimpleSequenceDiagram: React.FC<SimpleSequenceDiagramProps> = ({
           xmlns="http://www.w3.org/2000/svg"
           style={{ minWidth: '100%', maxWidth: '100%' }}
         >
-          {/* Background */}
+          {/* Background - make sure to use transparent fill */}
           <rect 
             x="0" 
             y="0" 
             width={svgWidth} 
             height={totalHeight} 
-            fill="var(--card)"
+            fill="transparent"
             rx="8"
             ry="8"
           />
@@ -79,18 +79,19 @@ export const SimpleSequenceDiagram: React.FC<SimpleSequenceDiagramProps> = ({
                 height={entityHeight}
                 rx="4"
                 ry="4"
-                fill="var(--primary)"
-                fillOpacity="0.3"
-                stroke="var(--primary)"
+                fill="#8b5cf6"
+                fillOpacity="0.2"
+                stroke="#8b5cf6"
                 strokeWidth="1"
               />
               <text
                 x={entity.x}
                 y={10 + (entityHeight / 2) + 5}
                 textAnchor="middle"
-                fill="var(--foreground)"
+                fill="currentColor"
                 fontSize="14"
                 fontFamily="system-ui, sans-serif"
+                className="text-foreground"
               >
                 {entity.label}
               </text>
@@ -105,7 +106,7 @@ export const SimpleSequenceDiagram: React.FC<SimpleSequenceDiagramProps> = ({
               y1={10 + entityHeight}
               x2={entity.x}
               y2={totalHeight - entityHeight - 10}
-              stroke="var(--border)"
+              stroke="#d1d5db"
               strokeWidth="2"
               strokeDasharray="4"
             />
@@ -132,7 +133,7 @@ export const SimpleSequenceDiagram: React.FC<SimpleSequenceDiagramProps> = ({
                   y1={arrowY}
                   x2={arrowEndX}
                   y2={arrowY}
-                  stroke="var(--foreground)"
+                  stroke="#64748b"
                   strokeWidth="1.5"
                   strokeDasharray={message.dashed ? "4" : "0"}
                 />
@@ -141,12 +142,12 @@ export const SimpleSequenceDiagram: React.FC<SimpleSequenceDiagramProps> = ({
                 {direction === 'forward' ? (
                   <polygon
                     points={`${arrowEndX - 8},${arrowY - 4} ${arrowEndX},${arrowY} ${arrowEndX - 8},${arrowY + 4}`}
-                    fill="var(--foreground)"
+                    fill="#64748b"
                   />
                 ) : (
                   <polygon
                     points={`${arrowStartX + 8},${arrowY - 4} ${arrowStartX},${arrowY} ${arrowStartX + 8},${arrowY + 4}`}
-                    fill="var(--foreground)"
+                    fill="#64748b"
                   />
                 )}
                 
@@ -155,11 +156,12 @@ export const SimpleSequenceDiagram: React.FC<SimpleSequenceDiagramProps> = ({
                   x={(arrowStartX + arrowEndX) / 2}
                   y={arrowY - 8}
                   textAnchor="middle"
-                  fill="var(--foreground)"
+                  fill="#1f2937"
                   fontSize="13"
                   fontFamily="system-ui, sans-serif"
                   fontWeight="500"
                   dy="-0.5em"
+                  className="text-foreground"
                 >
                   {`${index + 1}. ${message.label}`}
                 </text>
@@ -177,18 +179,19 @@ export const SimpleSequenceDiagram: React.FC<SimpleSequenceDiagramProps> = ({
                 height={entityHeight}
                 rx="4"
                 ry="4"
-                fill="var(--primary)"
-                fillOpacity="0.3"
-                stroke="var(--primary)"
+                fill="#8b5cf6"
+                fillOpacity="0.2"
+                stroke="#8b5cf6"
                 strokeWidth="1"
               />
               <text
                 x={entity.x}
                 y={totalHeight - (entityHeight / 2) - 5}
                 textAnchor="middle"
-                fill="var(--foreground)"
+                fill="currentColor"
                 fontSize="14"
                 fontFamily="system-ui, sans-serif"
+                className="text-foreground"
               >
                 {entity.label}
               </text>
