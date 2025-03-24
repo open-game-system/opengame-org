@@ -43,9 +43,6 @@ const NavBar = () => {
           <a href="/#ogs-app" className="text-sm font-medium hover:text-primary transition-colors">
             OGS Apps
           </a>
-          <a href="/#open-game-services" className="text-sm font-medium hover:text-primary transition-colors">
-            Services
-          </a>
           <a href="/#how-it-works" className="text-sm font-medium hover:text-primary transition-colors">
             How It Works
           </a>
@@ -108,13 +105,6 @@ const NavBar = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               OGS Apps
-            </a>
-            <a 
-              href="/#open-game-services" 
-              className="text-base font-medium hover:text-primary transition-colors py-2"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Services
             </a>
             <a 
               href="/#how-it-works" 
