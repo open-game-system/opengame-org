@@ -30,7 +30,6 @@ npm install @open-game-system/auth-kit`;
 
 // Initialize the auth client
 const authClient = createAuthClient({
-  gameId: 'your-game-id',
   apiKey: 'your-api-key'
 });
 
@@ -47,7 +46,6 @@ authClient.linkAccount()
 
 // Initialize the notification client
 const notificationClient = createNotificationClient({
-  gameId: 'your-game-id',
   apiKey: 'your-api-key'
 });
 
@@ -76,9 +74,8 @@ const castClient = createCastClient();
 
 // Signal that the game is ready to cast
 castClient.signalReady({
-  gameId: 'your-game-id',
   roomCode: 'room-123',
-  broadcastUrl: 'https://yourgame.com/tv?gameId=your-game-id&roomCode=room-123'
+  broadcastUrl: 'https://yourgame.com/tv?roomCode=room-123'
 });
 
 // Listen for cast state changes
@@ -435,7 +432,7 @@ castClient.subscribe((state) => {
               </p>
               
               <div className="mt-4">
-                <h4 className="text-lg font-bold mb-2">How to Test Your Game</h4>
+                <h4 className="text-lg font-medium mb-2">How to Test Your Game</h4>
                 <ol className="space-y-4 ml-4 list-decimal">
                   <li>
                     <p className="text-muted-foreground">Tap the "Settings" icon in the app's navigation</p>
@@ -942,7 +939,6 @@ flowchart TD
 
 // Create auth client in your game's backend
 const authClient = createAuthClient({
-  gameId: 'your-game-id',
   apiKey: 'your-api-key'
 });`} title="Server-side code" />
                 </div>
@@ -951,7 +947,13 @@ const authClient = createAuthClient({
                   <h4 className="font-medium mb-2">Step 3: Implement Account Linking</h4>
                   <CodeSnippet code={`// Backend route to generate link token
 app.post('/api/link-account', async (req, res) => {
-  const { gameUserId } = req.body;
+  // Get the user ID from the authenticated session
+  const gameUserId = req.session.userId;
+  
+  // Make sure the user is logged in
+  if (!gameUserId) {
+    return res.status(401).json({ error: 'User not authenticated' });
+  }
   
   try {
     const linkData = await authClient.createLinkToken({
@@ -970,11 +972,16 @@ function linkAccount() {
   fetch('/api/link-account', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ gameUserId: 'user-123' })
+    credentials: 'include' // Important: sends cookies/session info
   })
   .then(res => res.json())
   .then(data => {
-    window.location.href = data.linkUrl;
+    if (data.linkUrl) {
+      window.location.href = data.linkUrl;
+    }
+  })
+  .catch(error => {
+    console.error('Error initiating account linking:', error);
   });
 }`} title="Account linking implementation" />
                 </div>
@@ -1003,8 +1010,7 @@ function linkAccount() {
 
 // Create notification client in your game's backend
 const notificationClient = createNotificationClient({
-  gameId: 'your-game-id',
-  apiKey: 'your-api-key'  // Keep this secure on your server
+  apiKey: 'your-api-key'
 });`} title="Server-side code" />
                 </div>
                 
@@ -1056,9 +1062,7 @@ app.post('/api/send-notification', async (req, res) => {
                   <CodeSnippet code={`import { createCastClient } from '@open-game-system/cast-kit/client';
 
 // Create cast client in your game's frontend
-const castClient = createCastClient({
-  gameId: 'your-game-id'
-});
+const castClient = createCastClient();
 
 // Listen for cast state changes
 castClient.subscribe((state) => {
