@@ -41,7 +41,7 @@ const NavBar = () => {
             Core Components
           </a>
           <a href="/#ogs-app" className="text-sm font-medium hover:text-primary transition-colors">
-            OGS App
+            OGS Apps
           </a>
           <a href="/#open-game-services" className="text-sm font-medium hover:text-primary transition-colors">
             Services
@@ -107,7 +107,7 @@ const NavBar = () => {
               className="text-base font-medium hover:text-primary transition-colors py-2"
               onClick={() => setIsMenuOpen(false)}
             >
-              OGS App
+              OGS Apps
             </a>
             <a 
               href="/#open-game-services" 

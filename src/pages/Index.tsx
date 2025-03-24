@@ -101,12 +101,16 @@ castClient.subscribe((state) => {
   // FAQ items
   const faqItems = [
     {
-      question: "What is the OGS App?",
-      answer: "The OGS App is an open-source sandbox environment that lets your web game access native mobile capabilities instantly without requiring you to build a native app. Your game loads inside the OGS App WebView with access to push notifications, TV casting, and other native features."
+      question: "What is the Open Game System app?",
+      answer: "The Open Game System app is a unified platform that serves both players and developers. For players, it provides access to web games with native features like push notifications and TV casting. For developers, it offers built-in tools to test and distribute their games with native capabilities while keeping them web-first."
     },
     {
-      question: "What are Open Game Services?",
-      answer: "Open Game Services are hosted API services that power the OGS ecosystem. They include Notification Service for push notifications, Identity Service for account linking, and Casting Service for TV casting. These services can be used with the OGS App or self-hosted for complete control."
+      question: "How does the sandbox work?",
+      answer: "The app includes a built-in sandbox feature accessible from the Settings menu. Developers can enter any web game URL to create a sandboxed environment with access to native capabilities. This enables developers to test their web games with native features during development without needing to publish them first. The app is driven by a configuration that can be modified to include your own games for testing and distribution."
+    },
+    {
+      question: "How do I implement push notifications for my web game?",
+      answer: "OGS simplifies push notifications for web games through our notification-kit SDK. First, integrate the SDK into your game. Then, users who play your game through the OGS app can receive push notifications without installing a dedicated app. The notification service manages device tokens, delivery, and tracking across platforms. You can trigger notifications from your backend with just a few lines of code, and they'll be delivered even when users aren't actively playing."
     },
     {
       question: "What kind of native features can I access with OGS?",
@@ -117,16 +121,12 @@ castClient.subscribe((state) => {
       answer: "No. OGS is designed to work with existing web games through simple SDK integration. You keep your web-first approach and add native capabilities progressively without any major code changes."
     },
     {
-      question: "Can I use OGS App without using Open Game Services?",
-      answer: "Yes. The OGS ecosystem is modular. You can use the OGS App as a sandbox environment with your own backend services. Similarly, you can use Open Game Services without requiring players to use the OGS App, though some features may require the app for full functionality."
-    },
-    {
       question: "Is OGS available for all platforms?",
       answer: "OGS supports iOS, Android, desktop browsers, smart TVs, and game consoles that have web browsers. The SDK automatically detects the platform and provides appropriate APIs."
     },
     {
       question: "How much does OGS cost?",
-      answer: "OGS components are open-source and free to use. The OGS App is available for free download. For casted games, we provide a free tier, then meter bandwidth and charge based on usage with no hidden markups. We maintain clear, transparent pricing based purely on actual usage."
+      answer: "OGS components are open-source and free to use. The Open Game System app is available for free download. For casted games, we provide a free tier, then meter bandwidth and charge based on usage with no hidden markups. We maintain clear, transparent pricing based purely on actual usage."
     }
   ];
 
@@ -329,93 +329,25 @@ castClient.subscribe((state) => {
         </div>
       </section>
 
-      {/* OGS App Section - Similar to Expo Go */}
+      {/* OGS App Section */}
       <section id="ogs-app" className="section-padding">
         <div className="container mx-auto">
           <SectionHeader 
-            title="OGS Apps"
-            subtitle="Development and distribution environments for web games with native capabilities"
+            title="Open Game System App"
+            subtitle="One app for both players and developers"
           />
           
           <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* OGS Developer App (similar to Expo Go) */}
+            {/* App description */}
             <div className="bg-card p-6 rounded-xl border border-border">
-              <h3 className="text-xl font-bold mb-4">OGS Developer App</h3>
+              <h3 className="text-xl font-bold mb-4">Open Game System</h3>
               <p className="text-lg mb-4">
-                The OGS Developer App is a development environment that works like Expo Go but for web games. It lets you quickly test your web game with native capabilities during development.
+                A unified platform that lets players enjoy web games with native features, while giving developers an easy way to test their own games.
               </p>
               
               <div className="space-y-4">
                 <div className="bg-primary/10 p-4 rounded-lg">
-                  <h4 className="text-lg font-medium mb-2">Key Features</h4>
-                  <ul className="space-y-3">
-                    <li className="flex items-start gap-3">
-                      <div className="rounded-full bg-primary/10 p-1 mt-0.5">
-                        <Zap className="h-4 w-4 text-primary" />
-                      </div>
-                      <span>Local development server connection</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <div className="rounded-full bg-primary/10 p-1 mt-0.5">
-                        <Bell className="h-4 w-4 text-primary" />
-                      </div>
-                      <span>Test push notifications locally</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <div className="rounded-full bg-primary/10 p-1 mt-0.5">
-                        <Tv className="h-4 w-4 text-primary" />
-                      </div>
-                      <span>Preview TV casting during development</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <div className="rounded-full bg-primary/10 p-1 mt-0.5">
-                        <User className="h-4 w-4 text-primary" />
-                      </div>
-                      <span>Debug device-specific features</span>
-                    </li>
-                  </ul>
-                </div>
-                
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Button asChild variant="outline" size="sm">
-                    <a href="https://github.com/open-game-system/opengame-app" target="_blank" rel="noopener noreferrer">
-                      <Github className="mr-2 h-4 w-4" />
-                      View on GitHub
-                    </a>
-                  </Button>
-                  <Button asChild variant="outline" size="sm">
-                    <a href="#" target="_blank" rel="noopener noreferrer">
-                      Download for Android
-                    </a>
-                  </Button>
-                  <Button asChild variant="outline" size="sm">
-                    <a href="#" target="_blank" rel="noopener noreferrer">
-                      Download for iOS
-                    </a>
-                  </Button>
-                </div>
-
-                <div className="mt-4">
-                  <p className="text-sm text-muted-foreground mb-2">Typical development workflow:</p>
-                  <CodeSnippet code={`# Start your development server
-npm start
-
-# Connect using the OGS Developer App
-# by entering your local server URL or scanning a QR code`} title="Terminal" />
-                </div>
-              </div>
-            </div>
-            
-            {/* OGS Player App (for end users) */}
-            <div className="bg-card p-6 rounded-xl border border-border">
-              <h3 className="text-xl font-bold mb-4">OGS Player App</h3>
-              <p className="text-lg mb-4">
-                The OGS Player App is for end users - an app store distribution that lets players access web games with enhanced native capabilities like push notifications and TV casting.
-              </p>
-              
-              <div className="space-y-4">
-                <div className="bg-primary/10 p-4 rounded-lg">
-                  <h4 className="text-lg font-medium mb-2">Key Features</h4>
+                  <h4 className="text-lg font-medium mb-2">Player Features</h4>
                   <ul className="space-y-3">
                     <li className="flex items-start gap-3">
                       <div className="rounded-full bg-primary/10 p-1 mt-0.5">
@@ -444,6 +376,36 @@ npm start
                   </ul>
                 </div>
                 
+                <div className="bg-primary/10 p-4 rounded-lg">
+                  <h4 className="text-lg font-medium mb-2">Developer Features</h4>
+                  <ul className="space-y-3">
+                    <li className="flex items-start gap-3">
+                      <div className="rounded-full bg-primary/10 p-1 mt-0.5">
+                        <Zap className="h-4 w-4 text-primary" />
+                      </div>
+                      <span>Enter any URL to test web games in a sandbox environment</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="rounded-full bg-primary/10 p-1 mt-0.5">
+                        <Bell className="h-4 w-4 text-primary" />
+                      </div>
+                      <span>Test push notifications during development</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="rounded-full bg-primary/10 p-1 mt-0.5">
+                        <Tv className="h-4 w-4 text-primary" />
+                      </div>
+                      <span>Preview TV casting functionality for your games</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="rounded-full bg-primary/10 p-1 mt-0.5">
+                        <User className="h-4 w-4 text-primary" />
+                      </div>
+                      <span>Access all native features for your own web games</span>
+                    </li>
+                  </ul>
+                </div>
+                
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Button asChild className="bg-primary hover:bg-primary/90">
                     <a href="https://github.com/open-game-system/opengame-app" target="_blank" rel="noopener noreferrer">
@@ -464,78 +426,52 @@ npm start
                 </div>
               </div>
             </div>
-          </div>
+            
+            {/* Development workflow */}
+            <div className="bg-card p-6 rounded-xl border border-border">
+              <h3 className="text-xl font-bold mb-4">Testing Your Games</h3>
+              <p className="text-lg mb-4">
+                Any URL you enter in the app creates a sandboxed environment for that specific game with access to native features.
+              </p>
+              
+              <div className="mt-4">
+                <h4 className="text-lg font-bold mb-2">How to Test Your Game</h4>
+                <ol className="space-y-4 ml-4 list-decimal">
+                  <li>
+                    <p className="text-muted-foreground">Tap the "Settings" icon in the app's navigation</p>
+                  </li>
+                  <li>
+                    <p className="text-muted-foreground">Select "Sandbox" from the settings menu</p>
+                  </li>
+                  <li>
+                    <p className="text-muted-foreground">Enter your web game's URL and tap "Load Game"</p>
+                  </li>
+                  <li>
+                    <p className="text-muted-foreground">Your game loads in a WebView with access to all native features</p>
+                  </li>
+                </ol>
+              </div>
 
-          <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Developer App Visual */}
-            <div className="flex justify-center">
-              <div className="relative w-full max-w-sm">
-                {/* Developer App Screenshot based on Expo Go */}
-                <div className="bg-card border border-border rounded-[32px] shadow-lg aspect-[9/19] overflow-hidden">
-                  <div className="w-full h-full bg-background flex flex-col">
-                    {/* Header with App name similar to Expo Go */}
-                    <div className="px-4 py-3 border-b border-border flex items-center">
-                      <div className="flex items-center">
-                        <OGSSmallLogo className="w-5 h-5 mr-2" />
-                        <span className="font-medium">OGS Dev</span>
-                      </div>
-                      <div className="ml-auto text-xs text-muted-foreground">HELP</div>
-                    </div>
-                    
-                    {/* Content area */}
-                    <div className="flex-1 p-4 flex flex-col">
-                      <div className="mb-4">
-                        <h4 className="text-sm font-medium mb-2">Development servers</h4>
-                        <div className="bg-secondary/50 p-3 rounded-md mb-2">
-                          <p className="text-xs mb-2">Start a local development server with:</p>
-                          <div className="bg-muted p-2 rounded text-xs font-mono">npm start</div>
-                          <p className="text-xs mt-2">Select the local server when it appears here.</p>
-                        </div>
-                        <div className="flex items-center py-2">
-                          <div className="flex-1 text-sm">Enter URL manually</div>
-                          <div>›</div>
-                        </div>
-                      </div>
-                      
-                      <div>
-                        <div className="flex justify-between items-center mb-2">
-                          <h4 className="text-sm font-medium">Recently opened</h4>
-                          <span className="text-xs text-muted-foreground">CLEAR</span>
-                        </div>
-                        <div className="flex items-center py-3 border-t border-border">
-                          <div className="w-8 h-8 bg-primary/20 rounded-md flex items-center justify-center mr-3">
-                            <ImageIcon className="w-4 h-4 text-primary" />
-                          </div>
-                          <div className="flex-1">
-                            <div className="text-sm">Trivia Jam</div>
-                          </div>
-                          <div>›</div>
-                        </div>
-                      </div>
-                      
-                      <div className="mt-auto">
-                        <div className="grid grid-cols-2 border-t border-border">
-                          <div className="flex items-center justify-center py-3">
-                            <div className="h-5 w-5 bg-primary/10 rounded-full flex items-center justify-center">
-                              <div className="w-2 h-2 bg-primary rounded-sm"></div>
-                            </div>
-                            <span className="text-xs ml-2">Home</span>
-                          </div>
-                          <div className="flex items-center justify-center py-3">
-                            <div className="h-5 w-5 flex items-center justify-center">
-                              <div className="w-4 h-4 border-2 border-muted-foreground rounded-full"></div>
-                            </div>
-                            <span className="text-xs ml-2 text-muted-foreground">Settings</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <div className="mt-6">
+                <p className="text-sm text-muted-foreground mb-2">URL examples:</p>
+                <CodeSnippet code={`# Enter any web game URL:
+# Production sites
+https://yourgame.com
+https://mygame.example.com
+
+# Development environments
+https://dev.yourgame.com
+https://staging.mygame.example.com
+
+# Local network testing (if you have a web server)
+http://192.168.1.15:3000   # Replace with your computer's IP`} title="URL Input" />
               </div>
             </div>
-            
-            {/* Player App Visual */}
+          </div>
+          
+          <h3 className="text-xl font-bold mt-12 mb-4 text-center">App Tour</h3>
+          <div className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
+            {/* Main App Visual */}
             <div className="flex justify-center">
               <div className="relative w-full max-w-sm">
                 <div className="bg-card border border-border rounded-[32px] shadow-lg aspect-[9/19] overflow-hidden">
@@ -545,7 +481,7 @@ npm start
                       <div className="flex-1"></div>
                       <div className="flex items-center justify-center">
                         <OGSSmallLogo className="w-6 h-6 mr-2" />
-                        <span className="font-medium font-orbitron">OGS</span>
+                        <span className="font-bold font-orbitron">OGS</span>
                       </div>
                       <div className="flex-1 flex justify-end">
                         <div className="w-8 h-8 bg-background/40 backdrop-blur-sm rounded-full flex items-center justify-center">
@@ -592,9 +528,9 @@ npm start
                         </div>
                       </div>
                       
-                      {/* Bottom navigation */}
+                      {/* Bottom navigation with Settings button */}
                       <div className="mt-auto">
-                        <div className="grid grid-cols-3 pt-3">
+                        <div className="grid grid-cols-3 pt-3 border-t border-border">
                           <div className="flex flex-col items-center">
                             <div className="h-10 w-10 bg-primary/10 rounded-full flex items-center justify-center">
                               <div className="w-5 h-5 text-primary">🏠</div>
@@ -608,14 +544,159 @@ npm start
                             <span className="text-xs mt-1 text-muted-foreground">Discover</span>
                           </div>
                           <div className="flex flex-col items-center">
-                            <div className="h-10 w-10 rounded-full flex items-center justify-center">
-                              <div className="w-5 h-5 text-muted-foreground">⚙️</div>
+                            <div className="h-10 w-10 bg-primary/10 rounded-full flex items-center justify-center animate-pulse">
+                              <div className="w-5 h-5 text-primary">⚙️</div>
                             </div>
-                            <span className="text-xs mt-1 text-muted-foreground">Settings</span>
+                            <span className="text-xs mt-1">Settings</span>
                           </div>
                         </div>
                       </div>
                     </div>
+                  </div>
+                </div>
+                <div className="absolute -bottom-6 text-center w-full">
+                  <div className="inline-block font-medium bg-card text-foreground px-4 py-2 rounded-lg shadow-md text-sm">
+                    Home Screen
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* URL Input Screen Visual */}
+            <div className="flex justify-center">
+              <div className="relative w-full max-w-sm">
+                <div className="bg-card border border-border rounded-[32px] shadow-lg aspect-[9/19] overflow-hidden">
+                  <div className="w-full h-full bg-gradient-to-br from-ogs-purple/30 to-primary/20 flex flex-col">
+                    {/* Header matching the image with back button */}
+                    <div className="px-4 py-3 flex items-center">
+                      <div className="flex items-center">
+                        <div className="h-8 w-8 bg-background/40 backdrop-blur-sm rounded-full flex items-center justify-center mr-3 cursor-pointer">
+                          <div className="text-primary font-bold">←</div>
+                        </div>
+                        <OGSSmallLogo className="w-5 h-5 mr-2" />
+                        <span className="font-bold font-orbitron">OGS</span>
+                        <span className="text-xs bg-primary/20 px-2 py-0.5 rounded-full ml-2">SANDBOX</span>
+                      </div>
+                    </div>
+                    
+                    {/* Content area matching the image */}
+                    <div className="flex-1 p-4 flex flex-col">
+                      <h4 className="text-sm font-medium mb-4">Enter a URL</h4>
+                      
+                      <div className="bg-background/80 backdrop-blur-sm p-3 rounded-md mb-4">
+                        <div className="bg-muted/80 p-2 rounded text-xs font-mono">https://yourgame.com</div>
+                      </div>
+                      
+                      <p className="text-xs mb-4">This URL will load in a sandbox with access to native features</p>
+                      
+                      <Button size="sm" className="w-full justify-center mb-6 bg-primary hover:bg-primary/90">
+                        Load Game
+                      </Button>
+                      
+                      <div>
+                        <div className="flex justify-between items-center mb-2">
+                          <h4 className="text-sm font-medium">Recently tested</h4>
+                          <span className="text-xs">CLEAR</span>
+                        </div>
+                        
+                        <div className="space-y-1">
+                          <div className="flex items-center p-2 rounded-md">
+                            <div className="w-8 h-8 bg-primary/20 rounded-md flex items-center justify-center mr-3">
+                              <ImageIcon className="w-4 h-4 text-primary" />
+                            </div>
+                            <div className="flex-1">
+                              <div className="text-sm">Trivia Jam</div>
+                              <div className="text-xs text-muted-foreground">https://triviajam.tv</div>
+                            </div>
+                            <div>›</div>
+                          </div>
+                          
+                          <div className="flex items-center p-2 rounded-md">
+                            <div className="w-8 h-8 bg-primary/20 rounded-md flex items-center justify-center mr-3">
+                              <ImageIcon className="w-4 h-4 text-primary" />
+                            </div>
+                            <div className="flex-1">
+                              <div className="text-sm">Local Game</div>
+                              <div className="text-xs text-muted-foreground">http://192.168.1.15:3000</div>
+                            </div>
+                            <div>›</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="absolute -bottom-6 text-center w-full">
+                  <div className="inline-block font-medium bg-card text-foreground px-4 py-2 rounded-lg shadow-md text-sm">
+                    Sandbox Screen
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Game Loaded in WebView Visual */}
+            <div className="flex justify-center">
+              <div className="relative w-full max-w-sm">
+                <div className="bg-card border border-border rounded-[32px] shadow-lg aspect-[9/19] overflow-hidden">
+                  <div className="w-full h-full flex flex-col">
+                    {/* Header with URL and controls */}
+                    <div className="px-4 py-3 bg-gradient-to-r from-ogs-purple/30 to-primary/20 border-b border-border flex items-center">
+                      <div className="flex items-center mr-2">
+                        <div className="h-6 w-6 bg-background/40 backdrop-blur-sm rounded-full flex items-center justify-center cursor-pointer">
+                          <div className="text-primary font-bold text-sm">←</div>
+                        </div>
+                      </div>
+                      <div className="flex-1 flex items-center">
+                        <span className="text-xs font-mono truncate">triviajam.tv</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs bg-primary/20 px-2 py-0.5 rounded-full">Sandbox</span>
+                        <span className="w-6 h-6 flex items-center justify-center">×</span>
+                      </div>
+                    </div>
+                    
+                    {/* WebView content - game loaded */}
+                    <div className="flex-1 bg-background">
+                      {/* Trivia Game UI Mockup */}
+                      <div className="h-full w-full bg-purple-900 flex flex-col">
+                        <div className="p-4 flex items-center justify-between">
+                          <span className="font-bold text-white">Trivia Jam</span>
+                          <span className="text-xs text-white bg-white/20 px-2 py-1 rounded">Score: 250</span>
+                        </div>
+                        
+                        <div className="flex-1 flex flex-col items-center justify-center p-6">
+                          <div className="w-full bg-white/10 backdrop-blur-sm p-4 rounded-lg mb-6">
+                            <h3 className="text-white text-lg font-medium mb-3">Which planet has the most moons?</h3>
+                            <div className="space-y-2">
+                              <div className="bg-white/20 p-2 rounded-lg text-white">Mars</div>
+                              <div className="bg-white/20 p-2 rounded-lg text-white">Earth</div>
+                              <div className="bg-primary/60 p-2 rounded-lg text-white font-medium">Saturn</div>
+                              <div className="bg-white/20 p-2 rounded-lg text-white">Jupiter</div>
+                            </div>
+                          </div>
+                          <div className="w-full">
+                            <Button size="sm" className="w-full justify-center bg-primary hover:bg-primary/90">
+                              Next Question
+                            </Button>
+                          </div>
+                        </div>
+                        
+                        <div className="p-3 border-t border-white/10">
+                          <div className="flex justify-between items-center text-xs text-white">
+                            <span>Question 3/10</span>
+                            <span>Time: 0:45</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="absolute -top-6 right-1/4 w-32 h-12 bg-white text-black p-2 rounded-lg shadow-md text-xs text-center transform rotate-6">
+                  With native features!
+                </div>
+                <div className="absolute -bottom-6 text-center w-full">
+                  <div className="inline-block font-medium bg-card text-foreground px-4 py-2 rounded-lg shadow-md text-sm">
+                    Game Running
                   </div>
                 </div>
               </div>
@@ -623,7 +704,7 @@ npm start
           </div>
         </div>
       </section>
-      
+
       {/* Open Game Services Section */}
       <section id="open-game-services" className="section-padding bg-secondary/50">
         <div className="container mx-auto">
@@ -757,7 +838,7 @@ npm start
                 </div>
                 <div>
                   <h3 className="text-lg font-medium mb-2">OGS App Integration</h3>
-                  <p className="text-muted-foreground">Your web game runs inside the OGS App WebView to access native capabilities like push notifications and TV casting.</p>
+                  <p className="text-muted-foreground">Your web game runs inside the Open Game System app's WebView to access native capabilities like push notifications and TV casting, which are only accessible within this app environment.</p>
                 </div>
               </div>
               
@@ -785,49 +866,50 @@ npm start
             <div className="bg-card p-6 rounded-xl border border-border">
               <h3 className="text-lg font-medium mb-4">OGS Ecosystem Architecture</h3>
               <div className="w-full">
-                <Mermaid 
-                  chart={`
+                <div className="bg-gradient-to-br from-gray-900 to-primary/5 p-6 rounded-xl border border-primary/20 shadow-xl">
+                  <div className="w-full">
+                    <Mermaid 
+                      chart={`
 flowchart TD
-  subgraph "Your Web Game"
-    WebGame[Web Game]
-    AuthKit[auth-kit]
-    NotificationKit[notification-kit]
-    CastKit[cast-kit]
-  end
+  %% Components
+  WebGame[Web Game]
+  OGSApp[Open Game System App]
+  IdentityService[Identity Service]
+  NotificationService[Notification Service]
+  CastingService[Casting Service]
   
-  subgraph "OGS Ecosystem"
-    OGSApp[OGS App]
-    subgraph "Open Game Services"
-      IdentityService[Identity Service]
-      NotificationService[Notification Service]
-      CastingService[Casting Service]
-    end
-  end
+  %% SDK connections
+  WebGame -->|Integrates| AuthKit & NotificationKit & CastKit
   
-  WebGame -->|Integrates with| AuthKit & NotificationKit & CastKit
+  %% SDK to Services connections
+  AuthKit -.->|Account linking| OGSApp
+  NotificationKit -.->|Push notifications| OGSApp
+  WebGame -.->|Runs in WebView| OGSApp
+  CastKit -.->|TV casting| OGSApp
   
-  WebGame -.->|Runs in regular browser| RegularBrowser[Regular Browser]
-  WebGame -->|Runs in WebView| OGSApp
+  OGSApp -.->|Use| IdentityService
+  OGSApp -.->|Use| NotificationService
+  OGSApp -.->|Use| CastingService
   
-  AuthKit -->|Account linking| IdentityService
-  NotificationKit -->|Push notifications| NotificationService
-  CastKit -->|TV casting| OGSApp -->|Uses| CastingService
+  %% Styling for dark mode and better visuals
+  classDef default fill:transparent,stroke:#555,stroke-width:1px,color:#eee,rx:6,ry:6,padding:10px;
+  classDef webGame fill:#22303c,stroke:#4a6baf,stroke-width:1.5px,color:#eee,rx:8,ry:8,padding:15px;
+  classDef sdk fill:#2d2d3f,stroke:#777,stroke-width:1px,stroke-dasharray:5 5,color:#ccc,rx:6,ry:6,padding:12px;
+  classDef ogsApp fill:#331b47,stroke:#9333EA,stroke-width:2px,color:#eee,rx:10,ry:10,padding:15px;
+  classDef service fill:#2a243d,stroke:#9c6ade,stroke-width:1.5px,stroke-dasharray:3 3,color:#eee,rx:8,ry:8,padding:15px;
   
-  classDef primary fill:#8B5CF6,stroke:#000000,color:#FFFFFF,stroke-width:2px
-  classDef secondary fill:#E9D5FF,stroke:#000000,color:#000000,stroke-width:2px
-  classDef browser fill:#64748B,stroke:#000000,color:#FFFFFF,stroke-width:2px
-  classDef game fill:#BFDBFE,stroke:#000000,color:#000000,stroke-width:2px
-  
-  class OGSApp,IdentityService,NotificationService,CastingService primary
-  class AuthKit,NotificationKit,CastKit secondary
-  class RegularBrowser browser
-  class WebGame game
+  class WebGame webGame;
+  class AuthKit,NotificationKit,CastKit sdk;
+  class OGSApp ogsApp;
+  class IdentityService,NotificationService,CastingService service;
                 `} 
-                  className="bg-card p-4 rounded-lg border-2 border-border shadow-md max-w-4xl mx-auto overflow-hidden"
-                />
-              </div>
-              <div className="mt-4 text-sm text-muted-foreground">
-                <p>The OGS ecosystem provides a complete solution for web games: The OGS App serves as a sandbox environment for your web game, while Open Game Services power the backend functionality.</p>
+                      className="bg-gradient-to-br from-black/30 to-primary/10 p-8 rounded-xl border border-primary/20 shadow-xl"
+                    />
+                  </div>
+                  <div className="mt-6 text-sm text-gray-300/90 bg-black/20 p-4 rounded-lg border border-primary/10">
+                    <p>The OGS ecosystem provides a complete solution for web games: The <span className="text-primary/90 font-medium">Open Game System app</span> serves as a sandbox environment for your web game, while <span className="text-purple-400/90 font-medium">Open Game Services</span> power the backend functionality.</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1035,99 +1117,122 @@ function sendControllerInput(action, data) {
         <div className="container mx-auto px-4">
           <SectionHeader 
             title="Get Started"
-            subtitle="Begin your OGS integration journey"
+            subtitle="Build web games that leverage native features through the OGS app"
           />
           
           <div className="mt-12">
             <div className="bg-card p-6 rounded-xl border border-border max-w-4xl mx-auto">
-              <h3 className="text-xl font-bold mb-6 text-center">Start Building With OGS</h3>
+              <h3 className="text-xl font-bold mb-6 text-center">How to Use OGS with Your Web Game</h3>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                <div className="space-y-4">
-                  <div className="bg-primary/10 p-4 rounded-lg">
-                    <h4 className="text-lg font-bold mb-2">1. Try the OGS App</h4>
-                    <p className="text-muted-foreground mb-4">
-                      Download the OGS App to your device and start experimenting with how your web game can access native features.
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      <Button asChild variant="outline" size="sm">
-                        <a href="#" target="_blank" rel="noopener noreferrer">
-                          Download for Android
-                        </a>
-                      </Button>
-                      <Button asChild variant="outline" size="sm">
-                        <a href="#" target="_blank" rel="noopener noreferrer">
-                          Download for iOS
-                        </a>
-                      </Button>
-                    </div>
-                  </div>
-                  
-                  <div className="bg-primary/10 p-4 rounded-lg">
-                    <h4 className="text-lg font-bold mb-2">2. Integrate SDKs</h4>
-                    <p className="text-muted-foreground mb-4">
-                      Add the OGS SDK packages to your web game and start implementing native features.
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      <Button asChild variant="outline" size="sm">
-                        <a href="https://github.com/open-game-system/auth-kit" target="_blank" rel="noopener noreferrer">
-                          auth-kit
-                        </a>
-                      </Button>
-                      <Button asChild variant="outline" size="sm">
-                        <a href="https://github.com/open-game-system/notification-kit" target="_blank" rel="noopener noreferrer">
-                          notification-kit
-                        </a>
-                      </Button>
-                      <Button asChild variant="outline" size="sm">
-                        <a href="https://github.com/open-game-system/cast-kit" target="_blank" rel="noopener noreferrer">
-                          cast-kit
-                        </a>
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="space-y-4">
-                  <div className="bg-primary/10 p-4 rounded-lg">
-                    <h4 className="text-lg font-bold mb-2">3. Connect to Services</h4>
-                    <p className="text-muted-foreground mb-4">
-                      Use Open Game Services for hosted API endpoints with transparent pricing (free tier available with metered bandwidth) or self-host the services for complete control.
-                    </p>
-                    <Button asChild variant="outline" size="sm">
-                      <a href="https://github.com/open-game-system/opengame-api" target="_blank" rel="noopener noreferrer">
-                        Explore Services
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div className="bg-primary/10 p-4 rounded-lg">
+                  <h4 className="text-lg font-bold mb-2">1. Read the Specification</h4>
+                  <p className="text-muted-foreground mb-4">
+                    Understanding the OGS specification is the first step. Learn how the shell app works and how it enables your web game to access native device features.
+                  </p>
+                  <div className="space-y-3">
+                    <p className="text-sm text-foreground bg-card/50 p-2 rounded">The OGS app acts as a shell that loads your web game in a WebView with bridge API access to native features.</p>
+                    <Button asChild variant="outline" size="sm" className="w-full justify-start">
+                      <a href="https://github.com/open-game-system/specification" target="_blank" rel="noopener noreferrer">
+                        <ArrowRight className="mr-2 h-4 w-4" />
+                        Read the Specification
                       </a>
                     </Button>
                   </div>
-                  
-                  <div className="bg-primary/10 p-4 rounded-lg">
-                    <h4 className="text-lg font-bold mb-2">4. Study the Example</h4>
-                    <p className="text-muted-foreground mb-4">
-                      Explore Trivia Jam, our reference implementation, to see how everything works together.
-                    </p>
-                    <Button asChild variant="outline" size="sm">
+                </div>
+                
+                <div className="bg-primary/10 p-4 rounded-lg">
+                  <h4 className="text-lg font-bold mb-2">2. Study the Example</h4>
+                  <p className="text-muted-foreground mb-4">
+                    Explore Trivia Jam, our reference implementation, to see how a web game integrates with the OGS shell app and accesses native features.
+                  </p>
+                  <div className="space-y-3">
+                    <p className="text-sm text-foreground bg-card/50 p-2 rounded">Trivia Jam demonstrates SDK integration, WebView detection, and fallbacks for regular browsers.</p>
+                    <Button asChild variant="outline" size="sm" className="w-full justify-start">
                       <a href="https://github.com/open-game-system/trivia-jam" target="_blank" rel="noopener noreferrer">
-                        Trivia Jam Source
+                        <ArrowRight className="mr-2 h-4 w-4" />
+                        Study Trivia Jam Source
+                      </a>
+                    </Button>
+                    <Button asChild variant="outline" size="sm" className="w-full justify-start">
+                      <a href="https://triviajam.tv" target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        Try Trivia Jam Live
+                      </a>
+                    </Button>
+                  </div>
+                </div>
+                
+                <div className="bg-primary/10 p-4 rounded-lg">
+                  <h4 className="text-lg font-bold mb-2">3. Integrate the SDK</h4>
+                  <p className="text-muted-foreground mb-4">
+                    Add OGS SDK packages to your web game and implement feature detection to handle both OGS app and regular browser environments.
+                  </p>
+                  <div className="space-y-3">
+                    <Button asChild variant="outline" size="sm" className="w-full justify-start">
+                      <a href="https://github.com/open-game-system/auth-kit" target="_blank" rel="noopener noreferrer">
+                        <User className="mr-2 h-4 w-4" />
+                        auth-kit
+                      </a>
+                    </Button>
+                    <Button asChild variant="outline" size="sm" className="w-full justify-start">
+                      <a href="https://github.com/open-game-system/notification-kit" target="_blank" rel="noopener noreferrer">
+                        <Bell className="mr-2 h-4 w-4" />
+                        notification-kit
+                      </a>
+                    </Button>
+                    <Button asChild variant="outline" size="sm" className="w-full justify-start">
+                      <a href="https://github.com/open-game-system/cast-kit" target="_blank" rel="noopener noreferrer">
+                        <Tv className="mr-2 h-4 w-4" />
+                        cast-kit
                       </a>
                     </Button>
                   </div>
                 </div>
               </div>
               
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Button asChild className="bg-primary hover:bg-primary/90">
-                  <a href="https://github.com/open-game-system" target="_blank" rel="noopener noreferrer" className="flex items-center">
-                    <Github className="mr-2 h-4 w-4" />
-                    GitHub Organization
-                  </a>
-                </Button>
-                <Button asChild variant="outline">
-                  <a href="https://github.com/open-game-system/specification" target="_blank" rel="noopener noreferrer" className="flex items-center">
-                    <ArrowRight className="mr-2 h-4 w-4" />
-                    View Specification
-                  </a>
-                </Button>
+              <div className="bg-secondary/50 p-5 rounded-lg mt-8">
+                <h4 className="text-lg font-bold mb-3">How Your Web Game Loads in the OGS App</h4>
+                <div className="flex flex-col gap-6">
+                  <div className="bg-gradient-to-b from-black/30 to-primary/10 p-6 rounded-xl border border-primary/20">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                      <div className="flex flex-col items-center">
+                        <div className="text-4xl mb-2">🎮 → 📱</div>
+                        <p className="text-sm">Your web game runs in the OGS app</p>
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <div className="text-4xl mb-2">📱 → 🔔 📺 🔐</div>
+                        <p className="text-sm">Access native features</p>
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <div className="text-4xl mb-2">🌐 → 🎮</div>
+                        <p className="text-sm">Still works in browsers</p>
+                      </div>
+                    </div>
+                    <div className="text-center mt-4 pt-4 border-t border-primary/20">
+                      <p className="text-sm">Web-first games with native superpowers! ✨</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mt-8 text-center">
+                <p className="text-muted-foreground mb-6">
+                  Web-first with native capabilities when run through the OGS app
+                </p>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                  <Button asChild className="bg-primary hover:bg-primary/90">
+                    <a href="https://github.com/open-game-system" target="_blank" rel="noopener noreferrer" className="flex items-center">
+                      <Github className="mr-2 h-4 w-4" />
+                      GitHub Organization
+                    </a>
+                  </Button>
+                  <Button asChild variant="outline">
+                    <a href="#" target="_blank" rel="noopener noreferrer">
+                      Download OGS App
+                    </a>
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
