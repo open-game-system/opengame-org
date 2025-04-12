@@ -135,6 +135,10 @@ castClient.subscribe((state) => {
     {
       question: "Can I cloud render only part of my game?",
       answer: "Yes! Cloud rendering doesn't have to be all or nothing. You can use the stream-kit to render a specific, graphically-intensive part of your game (like the main 3D view) and stream it into a designated area of your existing web UI. This allows you to keep performance-critical UI elements like menus, HUDs, or buttons rendered natively while still leveraging cloud power for demanding visuals."
+    },
+    {
+      question: "How do I separate layers for partial cloud rendering?",
+      answer: "You structure your game routes accordingly. Your main game URL (e.g., `/game`) would load your standard web UI, including menus, HUDs, and the container for the stream. You would then create a specific route (e.g., `/game/stream-layer`) designed *only* to render the graphically intensive scene meant for cloud rendering. When you want to enable the feature, your main UI uses the `stream-kit` to request the `/game/stream-layer` URL be rendered in the cloud. The kit then places the resulting video stream into the designated container in your main UI, effectively compositing the cloud-rendered layer with your native UI layer."
     }
   ];
 
@@ -1122,6 +1126,9 @@ function MyGameComponent() {
                 </div>
 
                 <div className="mt-2">
+                  {/* TODO: Add a visual here explaining the compositing/layering concept */}
+                  {/* Example: Show native UI layer + streamed game layer -> final view */}
+                  {/* Inspiration: https://miro.medium.com/v2/resize:fit:1400/1*3_G9QDky6sADnV7t_dkUIQ.jpeg */}
                   <p className="text-center text-sm text-muted-foreground">(Visual representation for streaming TBD)</p>
                 </div>
               </div>
