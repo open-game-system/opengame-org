@@ -1,5 +1,5 @@
 import React from 'react';
-import { Github, Mail, Link, Globe, Twitter, MessageSquare } from 'lucide-react';
+import { Github, Mail, Globe, Twitter, MessageSquare } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -66,7 +66,7 @@ const Footer = () => {
             <ul className="space-y-2 text-sm">
               <li>
                 <a href="https://github.com/orgs/open-game-system/discussions" className="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
-                  Community Discussions
+                  Community
                 </a>
               </li>
               <li>
@@ -76,12 +76,7 @@ const Footer = () => {
               </li>
               <li>
                 <a href="https://triviajam.tv" className="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
-                  Trivia Jam
-                </a>
-              </li>
-              <li>
-                <a href="https://github.com/open-game-system/trivia-jam" className="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
-                  Trivia Jam Source
+                  Trivia Jam Demo
                 </a>
               </li>
             </ul>
@@ -98,11 +93,6 @@ const Footer = () => {
               <li>
                 <a href="mailto:hello@opengame.org" className="text-muted-foreground hover:text-primary transition-colors">
                   Contact
-                </a>
-              </li>
-              <li>
-                <a href="https://github.com/open-game-system" className="text-muted-foreground hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
-                  Open Source
                 </a>
               </li>
               <li>

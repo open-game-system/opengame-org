@@ -289,12 +289,6 @@ castClient.subscribe((state) => {
               icon={<Users className="h-6 w-6 text-primary" />}
               delay={200}
             />
-            <FeatureCard 
-              title="Secure"
-              description="Enterprise-grade security with encrypted communication and strict permission controls."
-              icon={<Shield className="h-6 w-6 text-primary" />}
-              delay={300}
-            />
             <FeatureCard
               title="Cloud Rendering"
               description="Deliver high-fidelity graphics for your web game by rendering it in the cloud and streaming it to any device via WebRTC. Ideal for turn-based games requiring significant GPU power."
@@ -313,7 +307,7 @@ castClient.subscribe((state) => {
             subtitle="OGS provides a suite of SDKs that enable different native capabilities for your web games."
           />
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
             <SDKCard 
               title="auth-kit"
               description="Link user accounts between games and OGS platform for seamless identity management."
@@ -370,31 +364,31 @@ castClient.subscribe((state) => {
                       <div className="rounded-full bg-primary/10 p-1 mt-0.5">
                         <Zap className="h-4 w-4 text-primary" />
                       </div>
-                      <span>Game discovery and quick launch</span>
+                      <span>Game discovery & quick launch</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="rounded-full bg-primary/10 p-1 mt-0.5">
                         <Bell className="h-4 w-4 text-primary" />
                       </div>
-                      <span>Push notifications for all games</span>
+                      <span>Push notifications</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="rounded-full bg-primary/10 p-1 mt-0.5">
                         <Tv className="h-4 w-4 text-primary" />
                       </div>
-                      <span>One-tap TV casting</span>
+                      <span>TV casting</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="rounded-full bg-primary/10 p-1 mt-0.5">
                         <User className="h-4 w-4 text-primary" />
                       </div>
-                      <span>Cross-game account linking</span>
+                      <span>Account linking</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="rounded-full bg-primary/10 p-1 mt-0.5">
                         <Cloud className="h-4 w-4 text-primary" />
                       </div>
-                      <span>Experience console-quality graphics streamed directly to your device.</span>
+                      <span>Stream high-fidelity graphics</span>
                     </li>
                   </ul>
                 </div>
@@ -406,31 +400,31 @@ castClient.subscribe((state) => {
                       <div className="rounded-full bg-primary/10 p-1 mt-0.5">
                         <Zap className="h-4 w-4 text-primary" />
                       </div>
-                      <span>Enter any URL to test web games in a sandbox environment</span>
+                      <span>Test any web game in sandbox</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="rounded-full bg-primary/10 p-1 mt-0.5">
                         <Bell className="h-4 w-4 text-primary" />
                       </div>
-                      <span>Test push notifications during development</span>
+                      <span>Test push notifications</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="rounded-full bg-primary/10 p-1 mt-0.5">
                         <Tv className="h-4 w-4 text-primary" />
                       </div>
-                      <span>Preview TV casting functionality for your games</span>
+                      <span>Preview TV casting</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="rounded-full bg-primary/10 p-1 mt-0.5">
                         <User className="h-4 w-4 text-primary" />
                       </div>
-                      <span>Access all native features for your own web games</span>
+                      <span>Access native features</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="rounded-full bg-primary/10 p-1 mt-0.5">
                         <Cloud className="h-4 w-4 text-primary" />
                       </div>
-                      <span>Test and integrate cloud-rendering and streaming for your games.</span>
+                      <span>Test cloud rendering & streaming</span>
                     </li>
                   </ul>
                 </div>
@@ -791,7 +785,7 @@ http://192.168.1.15:3000   # Replace with your computer's IP`} title="URL Input"
                 <div className="bg-gradient-to-br from-gray-900 to-primary/5 p-6 rounded-xl border border-primary/20 shadow-xl">
                   {/* Desktop version - hidden on small screens */}
                   <div className="w-full hidden md:block">
-                    <Mermaid 
+                    <Mermaid
                       chart={`
 flowchart TD
   %% Components
@@ -822,12 +816,12 @@ flowchart TD
   OGSApp -.->|Internal API calls| OGSApi
 
   %% Styling
-  classDef default fill:transparent,stroke:#555,stroke-width:1px,color:#eee,rx:8,ry:8,padding:20px;
-  classDef webGame fill:#22303c,stroke:#4a6baf,stroke-width:1.5px,color:#eee,rx:10,ry:10,padding:25px;
-  classDef sdk fill:#2d2d3f,stroke:#777,stroke-width:1px,stroke-dasharray:5 5,color:#ccc,rx:8,ry:8,padding:20px;
-  classDef ogsApp fill:#331b47,stroke:#9333EA,stroke-width:2px,color:#eee,rx:12,ry:12,padding:30px;
-  classDef api fill:#2a243d,stroke:#9c6ade,stroke-width:1.5px,stroke-dasharray:3 3,color:#eee,rx:10,ry:10,padding:25px;
-  classDef cloudRenderer fill:#1e40af,stroke:#60a5fa,stroke-width:1.5px,color:#eee,rx:10,ry:10,padding:25px;
+  classDef default fill:transparent,stroke:#555,stroke-width:1px,color:#eee,rx:8,ry:8;
+  classDef webGame fill:#22303c,stroke:#4a6baf,stroke-width:1.5px,color:#eee,rx:10,ry:10;
+  classDef sdk fill:#2d2d3f,stroke:#777,stroke-width:1px,stroke-dasharray:5 5,color:#ccc,rx:8,ry:8;
+  classDef ogsApp fill:#331b47,stroke:#9333EA,stroke-width:2px,color:#eee,rx:12,ry:12;
+  classDef api fill:#2a243d,stroke:#9c6ade,stroke-width:1.5px,stroke-dasharray:3 3,color:#eee,rx:10,ry:10;
+  classDef cloudRenderer fill:#1e40af,stroke:#60a5fa,stroke-width:1.5px,color:#eee,rx:10,ry:10; %% Simplified style
 
   linkStyle default stroke-width:1.5px;
 
@@ -836,7 +830,7 @@ flowchart TD
   class OGSApp ogsApp;
   class OGSApi api;
   class CloudRenderer cloudRenderer;
-                `} 
+                `}
                       className="bg-gradient-to-br from-black/30 to-primary/10 p-10 rounded-xl border border-primary/20 shadow-xl"
                     />
                   </div>
@@ -1106,6 +1100,135 @@ function sendControllerInput(action, data) {
                 </div>
               </div>
             </div>
+
+            <div id="stream-kit-integration">
+              <h3 className="text-xl font-bold mb-4 text-center">Stream Kit Integration (Conceptual)</h3>
+              <p className="text-center text-muted-foreground mb-6">
+                The Stream Kit facilitates rendering your game in the cloud and streaming it via WebRTC.
+                Ideal for turn-based games needing high-fidelity graphics on any device.
+              </p>
+              <div className="max-w-3xl mx-auto space-y-6">
+                <div className="bg-card p-4 rounded-lg">
+                  <h4 className="font-medium mb-2">Step 1: Install the Package</h4>
+                  <CodeSnippet code={`npm install @open-game-system/stream-kit`} title="Terminal" />
+                </div>
+
+                <div className="bg-card p-4 rounded-lg">
+                  <h4 className="font-medium mb-2">Step 2: Initialize the Client (Frontend)</h4>
+                  <CodeSnippet code={`import { createStreamClient } from '@open-game-system/stream-kit/client';
+
+// Initialize in your game's frontend
+const streamClient = createStreamClient();
+
+// Listen for state changes (e.g., connected, disconnected, error)
+streamClient.subscribe((state) => {
+  console.log('Stream state:', state.status);
+  // Update UI based on state
+});`} title="Client-side code" />
+                </div>
+
+                <div className="bg-card p-4 rounded-lg">
+                  <h4 className="font-medium mb-2">Step 3: Request a Stream & Integrate into UI</h4>
+                  <CodeSnippet code={`// --- Frontend React Code ---
+import React, { useRef, useState, useEffect, useMemo } from 'react';
+import { createStreamClient } from '@open-game-system/stream-kit/client'; // Assuming path
+
+function MyGameComponent() {
+  const streamContainerRef = useRef<HTMLDivElement>(null);
+  const [isStreaming, setIsStreaming] = useState(false);
+  const [streamError, setStreamError] = useState<string | null>(null);
+
+  // Initialize streamClient only once
+  const streamClient = useMemo(() => createStreamClient(), []);
+
+  useEffect(() => {
+    // Subscribe to stream state changes
+    const unsubscribe = streamClient.subscribe((state) => {
+      setIsStreaming(state.status === 'connected');
+      if (state.status === 'error') {
+        setStreamError(state.error || 'Unknown streaming error');
+      }
+      if (state.status !== 'error') {
+        setStreamError(null); // Clear error if status is not error
+      }
+    });
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, [streamClient]);
+
+  // Function to initiate the cloud stream
+  const handleStartStream = async () => {
+    if (!streamContainerRef.current) {
+      console.error("Stream container ref not available");
+      setStreamError("UI not ready for stream.");
+      return;
+    }
+    setStreamError(null);
+    setIsStreaming(true); // Indicate loading/connecting state
+
+    try {
+      await streamClient.requestStream({
+        gameUrl: 'https://your-game.com/path-to-render',
+        targetElement: streamContainerRef.current, // Tell the kit where to inject the video
+        // Optional: Pass initial data if needed by the game in the cloud
+        // initialData: { userToken: '...', difficulty: 'hard' }
+      });
+      console.log('Stream requested, kit handling connection...');
+      // isStreaming state will be updated by the subscription
+    } catch (error: any) {
+      console.error('Failed to start cloud stream:', error);
+      setStreamError(error.message || 'Failed to initiate stream');
+      setIsStreaming(false);
+    }
+  };
+
+  const handleStopStream = () => {
+    streamClient.disconnect(); // Ask the kit to stop the stream
+    setIsStreaming(false);
+    setStreamError(null);
+  };
+
+  return (
+    <div className="game-layout" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <div className="game-ui-elements" style={{ border: '1px solid grey', padding: '1rem' }}>
+        {/* Your game's native UI elements go here */}
+        <h2>Player Score: 123</h2>
+        <p>Other UI Controls...</p>
+        {!isStreaming ? (
+          <button onClick={handleStartStream}>
+            Start Cloud Stream
+          </button>
+        ) : (
+          <button onClick={handleStopStream}>
+            Stop Stream
+          </button>
+        )}
+        {streamError && <p style={{ color: 'red', marginTop: '0.5rem' }}>Error: {streamError}</p>}
+      </div>
+
+      {/* Container where the cloud-rendered game video will be injected */}
+      <div ref={streamContainerRef} id="stream-container" className="stream-view-area" style={{ border: '1px solid blue', minHeight: '300px', padding: '1rem', position: 'relative' }}>
+        {streamClient.getState().status === 'connecting' && (
+           <div className="placeholder">Connecting to stream...</div>
+        )}
+        {streamClient.getState().status === 'idle' && !streamError && (
+          <div className="placeholder">Stream not active. Click 'Start Cloud Stream' above.</div>
+        )}
+        {/* The streamClient manages the actual video element inside this div */}
+        {/* The targetElement itself should be visible for the client to attach */}
+      </div>
+    </div>
+  );
+}`} title="Integrating Stream into UI (Conceptual React Example)" />
+                </div>
+
+                <div className="mt-2">
+                  {/* Placeholder for stream visual - needs implementation */}
+                  {/* <SDKVisual type="stream" /> */}
+                  <p className="text-center text-sm text-muted-foreground">(Visual representation for streaming TBD)</p>
+                </div>
+              </div>
+            </div>
           </div>
           
           <div className="mt-16 text-center">
@@ -1190,21 +1313,8 @@ function sendControllerInput(action, data) {
                     </p>
                     <div className="grid grid-cols-1 gap-2">
                       <Button asChild variant="outline" size="sm" className="justify-start">
-                        <a href="https://github.com/open-game-system/auth-kit" target="_blank" rel="noopener noreferrer">
-                          <User className="mr-2 h-4 w-4" />
-                          auth-kit
-                        </a>
-                      </Button>
-                      <Button asChild variant="outline" size="sm" className="justify-start">
-                        <a href="https://github.com/open-game-system/notification-kit" target="_blank" rel="noopener noreferrer">
-                          <Bell className="mr-2 h-4 w-4" />
-                          notification-kit
-                        </a>
-                      </Button>
-                      <Button asChild variant="outline" size="sm" className="justify-start">
-                        <a href="https://github.com/open-game-system/cast-kit" target="_blank" rel="noopener noreferrer">
-                          <Tv className="mr-2 h-4 w-4" />
-                          cast-kit
+                        <a href="https://github.com/open-game-system/stream-kit" target="_blank" rel="noopener noreferrer">
+                          <span className="font-bold">stream-kit</span>
                         </a>
                       </Button>
                     </div>
@@ -1219,10 +1329,12 @@ function sendControllerInput(action, data) {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-y-12 gap-x-8 text-center">
                     <div className="flex flex-col items-center justify-start">
                       <div className="flex items-center justify-center mb-5 w-full">
-                        <div className="bg-[#22303c]/80 p-4 rounded-xl border border-[#4a6baf] p-4 rounded-xl shadow-md inline-block transform transition-transform hover:scale-105">
-                          <span className="text-4xl mr-2">🎮</span>
-                          <span className="text-white text-2xl mx-2">→</span>
-                          <span className="text-4xl ml-2">📱</span>
+                        <div className="flex items-center justify-center mb-5 w-full">
+                          <div className="bg-[#22303c]/80 p-4 rounded-xl border border-[#4a6baf] p-4 rounded-xl shadow-md inline-block transform transition-transform hover:scale-105">
+                            <span className="text-4xl mr-2">🎮</span>
+                            <span className="text-white text-2xl mx-2">→</span>
+                            <span className="text-4xl ml-2">📱</span>
+                          </div>
                         </div>
                       </div>
                       <p className="text-base font-medium text-white mt-2">Your web game runs in the OGS app</p>
