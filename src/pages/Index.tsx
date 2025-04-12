@@ -779,133 +779,28 @@ http://192.168.1.15:3000   # Replace with your computer's IP`} title="URL Input"
               </div>
             </div>
             
-            <div className="bg-card p-6 rounded-xl border border-border">
-              <h3 className="text-lg font-medium mb-4">OGS Ecosystem Architecture</h3>
-              <div className="w-full">
-                <div className="bg-gradient-to-br from-gray-900 to-primary/5 p-6 rounded-xl border border-primary/20 shadow-xl">
-                  {/* Desktop version - hidden on small screens */}
-                  <div className="w-full hidden md:block">
-                    <Mermaid
-                      chart={`
-flowchart TD
-  %% Components
-  WebGame[Web Game]
-  OGSApp[Open Game System App]
-  AuthKit[Auth Kit]
-  NotificationKit[Notification Kit]
-  CastKit[Cast Kit]
-  OGSApi[OGS API]
-  CloudRenderer[Cloud Rendering Service]
+            {/* Simplified Visual Representation */}
+            <div className="bg-card p-6 rounded-xl border border-border flex items-center justify-center min-h-[300px]">
+              <Mermaid 
+                chart={`
+graph LR
+    A["Your Web Game"] --> B{"Open Game System"};
+    B -- SDKs --> C["Native Features (Notifications, Cast, etc.)"];
+    B -- Optional --> D["Cloud Rendering Service"];
+    D --> E["High-Fidelity Stream"];
+    C --> F["Enhanced Experience"];
+    E --> F;
 
-  %% SDK connections
-  WebGame -->|Integrates| AuthKit
-  WebGame -->|Integrates| NotificationKit
-  WebGame -->|Integrates| CastKit
-
-  %% SDK to App connections
-  AuthKit -.->|Account linking| OGSApp
-  NotificationKit -.->|Push notifications| OGSApp
-  WebGame -.->|Runs in WebView| OGSApp
-  CastKit -.->|TV casting| OGSApp
-
-  %% Optional Cloud Rendering Path
-  OGSApp -.->|Initiates Stream (Optional)| CloudRenderer
-  CloudRenderer -.->|WebRTC Stream| OGSApp
-
-  %% API connection
-  OGSApp -.->|Internal API calls| OGSApi
-
-  %% Styling
-  classDef default fill:transparent,stroke:#555,stroke-width:1px,color:#eee,rx:8,ry:8;
-  classDef webGame fill:#22303c,stroke:#4a6baf,stroke-width:1.5px,color:#eee,rx:10,ry:10;
-  classDef sdk fill:#2d2d3f,stroke:#777,stroke-width:1px,stroke-dasharray:5 5,color:#ccc,rx:8,ry:8;
-  classDef ogsApp fill:#331b47,stroke:#9333EA,stroke-width:2px,color:#eee,rx:12,ry:12;
-  classDef api fill:#2a243d,stroke:#9c6ade,stroke-width:1.5px,stroke-dasharray:3 3,color:#eee,rx:10,ry:10;
-  classDef cloudRenderer fill:#1e40af,stroke:#60a5fa,stroke-width:1.5px,color:#eee,rx:10,ry:10; %% Simplified style
-
-  linkStyle default stroke-width:1.5px;
-
-  class WebGame webGame;
-  class AuthKit,NotificationKit,CastKit sdk;
-  class OGSApp ogsApp;
-  class OGSApi api;
-  class CloudRenderer cloudRenderer;
+    style B fill:#331b47,stroke:#9333EA,stroke-width:2px,color:#eee
+    style D fill:#1e40af,stroke:#60a5fa,stroke-width:1.5px,color:#eee
+    style C fill:#2d2d3f,stroke:#777,color:#ccc
+    style E fill:#2d2d3f,stroke:#777,color:#ccc
+    style F fill:#166534,stroke:#22c55e,color:#eee
                 `}
-                      className="bg-gradient-to-br from-black/30 to-primary/10 p-10 rounded-xl border border-primary/20 shadow-xl"
-                    />
-                  </div>
-
-                  {/* Mobile version - shown only on small screens */}
-                  <div className="w-full md:hidden">
-                    <div className="p-4 rounded-xl bg-gradient-to-br from-gray-900/80 to-primary/5">
-                      {/* Game Card */}
-                      <div className="bg-[#22303c] border-2 border-[#4a6baf] p-4 rounded-xl shadow-lg mb-4">
-                        <div className="flex items-center justify-between">
-                          <h4 className="text-lg font-bold text-white">Web Game</h4>
-                          <svg className="w-10 h-10 text-[#4a6baf]/80" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                          </svg>
-                        </div>
-                        <p className="text-gray-300 mt-2 text-sm">Your web-first game that works in any browser</p>
-                        <div className="mt-3 flex justify-end">
-                          <div className="bg-[#4a6baf]/30 text-white text-xs px-2 py-1 rounded">Web-First</div>
-                        </div>
-                      </div>
-                      
-                      {/* Down Arrow */}
-                      <div className="flex justify-center my-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                        </svg>
-                      </div>
-
-                      {/* SDKs Card */}
-                      <div className="bg-[#2d2d3f] border border-dashed border-[#777] p-4 rounded-xl shadow-lg mb-4">
-                        <div className="flex items-center justify-between">
-                          <h4 className="text-lg font-bold text-white">OGS SDKs</h4>
-                          <svg className="w-10 h-10 text-[#777]/80" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                          </svg>
-                        </div>
-                        <div className="grid grid-cols-3 gap-2 mt-3">
-                          <div className="bg-[#2a283d] p-2 rounded text-center text-xs text-white">Auth Kit</div>
-                          <div className="bg-[#2a283d] p-2 rounded text-center text-xs text-white">Notification Kit</div>
-                          <div className="bg-[#2a283d] p-2 rounded text-center text-xs text-white">Cast Kit</div>
-                        </div>
-                      </div>
-                      
-                      {/* Down Arrow */}
-                      <div className="flex justify-center my-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                        </svg>
-                      </div>
-
-                      {/* OGS App Card */}
-                      <div className="bg-[#331b47] border-2 border-[#9333EA] p-4 rounded-xl shadow-lg">
-                        <div className="flex items-center justify-between">
-                          <h4 className="text-lg font-bold text-white">OGS App</h4>
-                          <svg className="w-10 h-10 text-[#9333EA]/80" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
-                          </svg>
-                        </div>
-                        <p className="text-gray-300 mt-2 text-sm">Provides native capabilities & streaming client</p>
-                        <div className="mt-3 flex flex-wrap gap-2">
-                          <div className="bg-[#9333EA]/30 text-white text-xs px-2 py-1 rounded">Push Notifications</div>
-                          <div className="bg-[#9333EA]/30 text-white text-xs px-2 py-1 rounded">TV Casting</div>
-                          <div className="bg-[#9333EA]/30 text-white text-xs px-2 py-1 rounded">Account Linking</div>
-                          <div className="bg-[#1e40af]/30 text-white text-xs px-2 py-1 rounded">Cloud Streaming</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mt-6 text-sm text-gray-300/90 bg-black/20 p-4 rounded-lg border border-primary/10">
-                    <p>The OGS ecosystem provides a complete solution: The <span className="text-primary/90 font-medium">Open Game System app</span> acts as a runtime for your web game or a client for cloud streams, while SDKs connect it to native features.</p>
-                  </div>
-                </div>
-              </div>
+                className="w-full h-full"
+              />
             </div>
+
           </div>
         </div>
       </section>
@@ -1102,7 +997,7 @@ function sendControllerInput(action, data) {
             </div>
 
             <div id="stream-kit-integration">
-              <h3 className="text-xl font-bold mb-4 text-center">Stream Kit Integration (Conceptual)</h3>
+              <h3 className="text-xl font-bold mb-4 text-center">Stream Kit Integration</h3>
               <p className="text-center text-muted-foreground mb-6">
                 The Stream Kit facilitates rendering your game in the cloud and streaming it via WebRTC.
                 Ideal for turn-based games needing high-fidelity graphics on any device.
@@ -1219,12 +1114,10 @@ function MyGameComponent() {
       </div>
     </div>
   );
-}`} title="Integrating Stream into UI (Conceptual React Example)" />
+}`} title="Integrating Stream into UI (React Example)" />
                 </div>
 
                 <div className="mt-2">
-                  {/* Placeholder for stream visual - needs implementation */}
-                  {/* <SDKVisual type="stream" /> */}
                   <p className="text-center text-sm text-muted-foreground">(Visual representation for streaming TBD)</p>
                 </div>
               </div>
@@ -1313,8 +1206,28 @@ function MyGameComponent() {
                     </p>
                     <div className="grid grid-cols-1 gap-2">
                       <Button asChild variant="outline" size="sm" className="justify-start">
-                        <a href="https://github.com/open-game-system/stream-kit" target="_blank" rel="noopener noreferrer">
-                          <span className="font-bold">stream-kit</span>
+                        <a href="https://github.com/open-game-system/auth-kit" target="_blank" rel="noopener noreferrer">
+                          <User className="mr-2 h-4 w-4" />
+                          auth-kit
+                        </a>
+                      </Button>
+                      <Button asChild variant="outline" size="sm" className="justify-start">
+                        <a href="https://github.com/open-game-system/notification-kit" target="_blank" rel="noopener noreferrer">
+                          <Bell className="mr-2 h-4 w-4" />
+                          notification-kit
+                        </a>
+                      </Button>
+                      <Button asChild variant="outline" size="sm" className="justify-start">
+                        <a href="https://github.com/open-game-system/cast-kit" target="_blank" rel="noopener noreferrer">
+                          <Tv className="mr-2 h-4 w-4" />
+                          cast-kit
+                        </a>
+                      </Button>
+                       <Button asChild variant="outline" size="sm" className="justify-start">
+                         {/* TODO: Update href when stream-kit repo exists */}
+                        <a href="#stream-kit-integration" >
+                          <Cloud className="mr-2 h-4 w-4" /> 
+                          stream-kit
                         </a>
                       </Button>
                     </div>
