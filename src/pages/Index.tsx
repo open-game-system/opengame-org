@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Users, Bell, Tv, PlayCircle, User, Shield, Zap, Image as ImageIcon, ExternalLink, Github } from 'lucide-react';
+import { ArrowRight, Users, Bell, Tv, PlayCircle, User, Shield, Zap, Image as ImageIcon, ExternalLink, Github, Cloud, Server } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import NavBar from '@/components/NavBar';
 import OGSLogo from '@/components/OGSLogo';
@@ -115,6 +115,22 @@ castClient.subscribe((state) => {
     {
       question: "How much does OGS cost?",
       answer: "OGS components are open-source and free to use. The Open Game System app is available for free download. For casted games, we provide a free tier, then meter bandwidth and charge based on usage with no hidden markups. We maintain clear, transparent pricing based purely on actual usage."
+    },
+    {
+      question: "What is OGS Cloud Rendering?",
+      answer: "It's an optional feature allowing you to render your game on powerful cloud servers and stream the visuals via WebRTC to users. This provides high-fidelity graphics even on low-end devices, ideal for turn-based games."
+    },
+    {
+      question: "When should I use Cloud Rendering?",
+      answer: "Consider it for graphically intensive games, especially turn-based ones, where client hardware might be a bottleneck, or when you want to ensure a consistent high-quality visual experience across all devices."
+    },
+    {
+      question: "Is latency an issue with Cloud Rendering?",
+      answer: "Latency exists, making it less suitable for fast-paced action games. However, for turn-based games, strategy games, or experiences where reaction time isn't critical, the latency is generally acceptable and outweighed by the visual fidelity benefits."
+    },
+    {
+      question: "What are the costs associated with Cloud Rendering?",
+      answer: "Cloud rendering utilizes cloud GPU resources, which incur costs based on usage. OGS aims to provide transparent pricing structures. Costs are expected to decrease as GPU availability increases."
     }
   ];
 
@@ -218,7 +234,7 @@ castClient.subscribe((state) => {
                 Bridge Web Games to Native Features
               </h1>
               <p className="text-xl text-muted-foreground mb-8 max-w-xl mx-auto lg:mx-0">
-                Enable your web games to access native capabilities like push notifications and TV casting while maintaining their web-first nature.
+                Enable your web games to access native capabilities like push notifications, TV casting, and achieve high-fidelity graphics on any device through cloud streaming.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Button asChild size="lg" className="bg-primary hover:bg-primary/90">
@@ -279,6 +295,12 @@ castClient.subscribe((state) => {
               icon={<Shield className="h-6 w-6 text-primary" />}
               delay={300}
             />
+            <FeatureCard
+              title="Cloud Rendering"
+              description="Deliver high-fidelity graphics for your web game by rendering it in the cloud and streaming it to any device via WebRTC. Ideal for turn-based games requiring significant GPU power."
+              icon={<Cloud className="h-6 w-6 text-primary" />}
+              delay={400}
+            />
           </div>
         </div>
       </section>
@@ -313,6 +335,13 @@ castClient.subscribe((state) => {
               delay={400}
               href="#cast-kit-integration"
             />
+            <SDKCard
+              title="stream-kit"
+              description="Integrate cloud rendering capabilities. Stream graphics-intensive games from the server to provide a premium visual experience on low-power devices."
+              icon={<Cloud className="h-6 w-6 text-primary" />}
+              delay={600}
+              href="#stream-kit-integration"
+            />
           </div>
         </div>
       </section>
@@ -330,7 +359,7 @@ castClient.subscribe((state) => {
             <div className="bg-card p-6 rounded-xl border border-border">
               <h3 className="text-xl font-bold mb-4">Open Game System</h3>
               <p className="text-lg mb-4">
-                A unified platform that lets players enjoy web games with native features, while giving developers an easy way to test their own games.
+                A unified platform that lets players enjoy web games with native features, while giving developers an easy way to test their own games and leverage optional cloud rendering.
               </p>
               
               <div className="space-y-4">
@@ -361,6 +390,12 @@ castClient.subscribe((state) => {
                       </div>
                       <span>Cross-game account linking</span>
                     </li>
+                    <li className="flex items-start gap-3">
+                      <div className="rounded-full bg-primary/10 p-1 mt-0.5">
+                        <Cloud className="h-4 w-4 text-primary" />
+                      </div>
+                      <span>Experience console-quality graphics streamed directly to your device.</span>
+                    </li>
                   </ul>
                 </div>
                 
@@ -390,6 +425,12 @@ castClient.subscribe((state) => {
                         <User className="h-4 w-4 text-primary" />
                       </div>
                       <span>Access all native features for your own web games</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="rounded-full bg-primary/10 p-1 mt-0.5">
+                        <Cloud className="h-4 w-4 text-primary" />
+                      </div>
+                      <span>Test and integrate cloud-rendering and streaming for your games.</span>
                     </li>
                   </ul>
                 </div>
@@ -719,7 +760,7 @@ http://192.168.1.15:3000   # Replace with your computer's IP`} title="URL Input"
                 </div>
                 <div>
                   <h3 className="text-lg font-medium mb-2">OGS App Integration</h3>
-                  <p className="text-muted-foreground">Your web game runs inside the Open Game System app's WebView to access native capabilities like push notifications and TV casting, which are only accessible within this app environment.</p>
+                  <p className="text-muted-foreground">Your web game runs inside the Open Game System app's WebView or receives a high-fidelity stream rendered in the cloud, accessing native capabilities like push notifications and TV casting.</p>
                 </div>
               </div>
               
@@ -760,35 +801,41 @@ flowchart TD
   NotificationKit[Notification Kit]
   CastKit[Cast Kit]
   OGSApi[OGS API]
-  
-  %% SDK connections with improved spacing
+  CloudRenderer[Cloud Rendering Service]
+
+  %% SDK connections
   WebGame -->|Integrates| AuthKit
   WebGame -->|Integrates| NotificationKit
   WebGame -->|Integrates| CastKit
-  
-  %% SDK to App connections with better spacing
+
+  %% SDK to App connections
   AuthKit -.->|Account linking| OGSApp
   NotificationKit -.->|Push notifications| OGSApp
   WebGame -.->|Runs in WebView| OGSApp
   CastKit -.->|TV casting| OGSApp
-  
+
+  %% Optional Cloud Rendering Path
+  OGSApp -.->|Initiates Stream (Optional)| CloudRenderer
+  CloudRenderer -.->|WebRTC Stream| OGSApp
+
   %% API connection
   OGSApp -.->|Internal API calls| OGSApi
-  
-  %% Styling for dark mode and better visuals
+
+  %% Styling
   classDef default fill:transparent,stroke:#555,stroke-width:1px,color:#eee,rx:8,ry:8,padding:20px;
   classDef webGame fill:#22303c,stroke:#4a6baf,stroke-width:1.5px,color:#eee,rx:10,ry:10,padding:25px;
   classDef sdk fill:#2d2d3f,stroke:#777,stroke-width:1px,stroke-dasharray:5 5,color:#ccc,rx:8,ry:8,padding:20px;
   classDef ogsApp fill:#331b47,stroke:#9333EA,stroke-width:2px,color:#eee,rx:12,ry:12,padding:30px;
   classDef api fill:#2a243d,stroke:#9c6ade,stroke-width:1.5px,stroke-dasharray:3 3,color:#eee,rx:10,ry:10,padding:25px;
-  
-  %% Link styling for better spacing
+  classDef cloudRenderer fill:#1e40af,stroke:#60a5fa,stroke-width:1.5px,color:#eee,rx:10,ry:10,padding:25px;
+
   linkStyle default stroke-width:1.5px;
-  
+
   class WebGame webGame;
   class AuthKit,NotificationKit,CastKit sdk;
   class OGSApp ogsApp;
   class OGSApi api;
+  class CloudRenderer cloudRenderer;
                 `} 
                       className="bg-gradient-to-br from-black/30 to-primary/10 p-10 rounded-xl border border-primary/20 shadow-xl"
                     />
@@ -848,18 +895,19 @@ flowchart TD
                             <path strokeLinecap="round" strokeLinejoin="round" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
                           </svg>
                         </div>
-                        <p className="text-gray-300 mt-2 text-sm">Provides native capabilities to web games</p>
+                        <p className="text-gray-300 mt-2 text-sm">Provides native capabilities & streaming client</p>
                         <div className="mt-3 flex flex-wrap gap-2">
                           <div className="bg-[#9333EA]/30 text-white text-xs px-2 py-1 rounded">Push Notifications</div>
                           <div className="bg-[#9333EA]/30 text-white text-xs px-2 py-1 rounded">TV Casting</div>
                           <div className="bg-[#9333EA]/30 text-white text-xs px-2 py-1 rounded">Account Linking</div>
+                          <div className="bg-[#1e40af]/30 text-white text-xs px-2 py-1 rounded">Cloud Streaming</div>
                         </div>
                       </div>
                     </div>
                   </div>
 
                   <div className="mt-6 text-sm text-gray-300/90 bg-black/20 p-4 rounded-lg border border-primary/10">
-                    <p>The OGS ecosystem provides a complete solution for web games: The <span className="text-primary/90 font-medium">Open Game System app</span> serves as a sandbox environment for your web game, while the SDKs connect your game to all native capabilities.</p>
+                    <p>The OGS ecosystem provides a complete solution: The <span className="text-primary/90 font-medium">Open Game System app</span> acts as a runtime for your web game or a client for cloud streams, while SDKs connect it to native features.</p>
                   </div>
                 </div>
               </div>
@@ -1171,7 +1219,7 @@ function sendControllerInput(action, data) {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-y-12 gap-x-8 text-center">
                     <div className="flex flex-col items-center justify-start">
                       <div className="flex items-center justify-center mb-5 w-full">
-                        <div className="bg-[#22303c]/80 p-4 rounded-xl border border-[#4a6baf]/60 shadow-md inline-block transform transition-transform hover:scale-105">
+                        <div className="bg-[#22303c]/80 p-4 rounded-xl border border-[#4a6baf] p-4 rounded-xl shadow-md inline-block transform transition-transform hover:scale-105">
                           <span className="text-4xl mr-2">🎮</span>
                           <span className="text-white text-2xl mx-2">→</span>
                           <span className="text-4xl ml-2">📱</span>
@@ -1182,7 +1230,7 @@ function sendControllerInput(action, data) {
                     
                     <div className="flex flex-col items-center justify-start">
                       <div className="flex items-center justify-center mb-5 w-full">
-                        <div className="bg-[#331b47]/80 p-4 rounded-xl border border-[#9333EA]/60 shadow-md inline-block transform transition-transform hover:scale-105">
+                        <div className="bg-[#331b47]/80 p-4 rounded-xl border border-[#9333EA] p-4 rounded-xl shadow-md inline-block transform transition-transform hover:scale-105">
                           <span className="text-4xl mr-2">📱</span>
                           <span className="text-white text-2xl mx-1">→</span>
                           <span className="text-4xl mx-1">🔔</span>
@@ -1195,7 +1243,7 @@ function sendControllerInput(action, data) {
                     
                     <div className="flex flex-col items-center justify-start">
                       <div className="flex items-center justify-center mb-5 w-full">
-                        <div className="bg-[#2d2d3f]/80 p-4 rounded-xl border border-[#777]/60 shadow-md inline-block transform transition-transform hover:scale-105">
+                        <div className="bg-[#2d2d3f]/80 p-4 rounded-xl border border-[#777] p-4 rounded-xl shadow-md inline-block transform transition-transform hover:scale-105">
                           <span className="text-4xl mr-2">🌐</span>
                           <span className="text-white text-2xl mx-2">→</span>
                           <span className="text-4xl ml-2">🎮</span>

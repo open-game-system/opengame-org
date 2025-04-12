@@ -53,6 +53,11 @@ const Footer = () => {
                   Cast Kit
                 </a>
               </li>
+              <li>
+                <a href="#stream-kit-integration" className="text-muted-foreground hover:text-primary transition-colors">
+                  Stream Kit (Conceptual)
+                </a>
+              </li>
             </ul>
           </div>
           
