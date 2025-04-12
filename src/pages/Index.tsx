@@ -131,6 +131,10 @@ castClient.subscribe((state) => {
     {
       question: "What are the costs associated with Cloud Rendering?",
       answer: "Cloud rendering utilizes cloud GPU resources, which incur costs based on usage. OGS aims to provide transparent pricing structures. Costs are expected to decrease as GPU availability increases."
+    },
+    {
+      question: "Can I cloud render only part of my game?",
+      answer: "Yes! Cloud rendering doesn't have to be all or nothing. You can use the stream-kit to render a specific, graphically-intensive part of your game (like the main 3D view) and stream it into a designated area of your existing web UI. This allows you to keep performance-critical UI elements like menus, HUDs, or buttons rendered natively while still leveraging cloud power for demanding visuals."
     }
   ];
 
