@@ -5,29 +5,23 @@ import { Github, Mail, Code, Rocket, PuzzleIcon, Users, Globe, Zap, MessageSquar
 import { Button } from '@/components/ui/button';
 import OGSLogo from '@/components/OGSLogo';
 
-interface CollectiveMember {
+interface Member {
   username: string;
-  role: string;
-  memberType: 'contributor' | 'advisor';
 }
 
 const Collective = () => {
-  const members: CollectiveMember[] = [
+  const members: Member[] = [
     {
       username: 'jonmumm',
-      role: 'Creator',
-      memberType: 'contributor',
     },
     {
       username: 'fravic',
-      role: 'Core Contributor',
-      memberType: 'contributor',
+    },
+    {
+      username: 'octanebaby',
     },
     // Room for more contributors to be added here
   ];
-
-  // Filter members by type
-  const activeContributors = members.filter(member => member.memberType === 'contributor');
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -76,15 +70,16 @@ const Collective = () => {
           <div className="max-w-4xl mx-auto">
             <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">Our Mission</h2>
             <p className="text-lg mb-6 text-center text-foreground">
-              We're building tools that enable web game developers to access native device features without 
-              sacrificing the web-first nature of their games. Our goal is to create an open ecosystem that 
-              benefits the entire gaming community.
+              To collaboratively develop and maintain open specifications, protocols, SDKs, and services 
+              that empower developers and players, making rich gaming experiences more accessible 
+              and decentralized across the web and native platforms.
             </p>
             <div className="bg-card border border-border rounded-lg p-8 mb-12">
-              <h3 className="text-xl font-bold mb-4 text-center">Launch Faster, Reach Further</h3>
+              <h3 className="text-xl font-bold mb-4 text-center">Our Approach: Open Protocols for Accessible Gaming</h3>
               <p className="text-foreground mb-4">
-                The Open Game System helps developers get to market faster by eliminating the traditional overhead 
-                of app store distribution. Your game remains a web app at its core, but gains access to powerful native features.
+                We believe in building upon the open web. Our protocols offer standardized ways 
+                to progressively enhance web games with capabilities previously locked behind 
+                proprietary platforms, fostering innovation and accessibility.
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -93,10 +88,10 @@ const Collective = () => {
                     <Globe className="h-5 w-5" />
                   </div>
                   <div>
-                    <h4 className="font-bold mb-2">Web-First, Native-Enhanced</h4>
+                    <h4 className="font-bold mb-2">Foundation on Web Standards</h4>
                     <p className="text-sm text-foreground">
-                      Build your game as a web application first, using familiar web technologies. Then seamlessly add native 
-                      capabilities like push notifications and TV casting without compromising your web-first architecture.
+                      Games remain fundamentally web applications. OGS provides open protocols to optionally 
+                      integrate features like notifications, casting, or cloud streaming via standardized interfaces.
                     </p>
                   </div>
                 </div>
@@ -106,10 +101,10 @@ const Collective = () => {
                     <Rocket className="h-5 w-5" />
                   </div>
                   <div>
-                    <h4 className="font-bold mb-2">Open Game App</h4>
+                    <h4 className="font-bold mb-2">Advanced Capabilities via Protocols</h4>
                     <p className="text-sm text-foreground">
-                      Our Open Game App is already deployed and ready to use. It provides a 
-                      container for your web game to access native features without requiring custom app development or app store approval.
+                      Our protocols, like the `stream-kit` specification, define how to deliver advanced experiences, such as cloud-rendering RTX 3080-level graphics 
+                      to any device, ensuring interoperability and openness.
                     </p>
                   </div>
                 </div>
@@ -194,10 +189,8 @@ const Collective = () => {
             </div>
 
             <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">Core Team</h2>
-            
-            <h3 className="text-xl font-bold mb-6 text-center">Active Contributors</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-              {activeContributors.map((member) => (
+              {members.map((member) => (
                 <div 
                   key={member.username} 
                   className="flex flex-col items-center p-6 border border-border rounded-lg bg-card hover:shadow-md transition-shadow"
@@ -214,7 +207,6 @@ const Collective = () => {
                     />
                   </div>
                   <h3 className="text-xl font-bold mb-2">{member.username}</h3>
-                  <p className="text-sm text-primary mb-4">{member.role}</p>
                   <Button variant="ghost" size="sm" asChild>
                     <a 
                       href={`https://github.com/${member.username}`} 
@@ -228,23 +220,6 @@ const Collective = () => {
                   </Button>
                 </div>
               ))}
-              
-              {/* Placeholder for future contributors */}
-              <div className="flex flex-col items-center justify-center p-6 border border-dashed border-border rounded-lg bg-card/50 hover:bg-card/80 transition-colors">
-                <p className="text-lg font-medium text-foreground mb-2">Could be you</p>
-                <p className="text-sm text-foreground mb-4">Want to help build the future of web gaming?</p>
-                <Button variant="outline" size="sm" asChild>
-                  <a 
-                    href="https://github.com/orgs/open-game-system/discussions" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex items-center"
-                  >
-                    <Github className="mr-2 h-4 w-4" />
-                    Join the Discussions
-                  </a>
-                </Button>
-              </div>
             </div>
 
             <div className="bg-card border border-border rounded-lg p-8 mb-12">
