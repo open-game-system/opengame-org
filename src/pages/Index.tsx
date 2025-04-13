@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Users, Bell, Tv, PlayCircle, User, Shield, Zap, Image as ImageIcon, ExternalLink, Github, Cloud, Server } from 'lucide-react';
+import { ArrowRight, Users, Bell, Tv, PlayCircle, User, Shield, Zap, Image as ImageIcon, ExternalLink, Github, Cloud, Server, Globe, Map, ArrowLeft, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import NavBar from '@/components/NavBar';
 import OGSLogo from '@/components/OGSLogo';
@@ -14,6 +14,7 @@ import Footer from '@/components/Footer';
 import { Mermaid } from '@/components/ui/mermaid';
 import SimpleSequenceDiagram from '@/components/ui/SimpleSequenceDiagram';
 import SDKVisual from '@/components/SDKVisual';
+import * as Tabs from '@radix-ui/react-tabs';
 
 const Index = () => {
   // Sample code snippets
@@ -134,11 +135,11 @@ castClient.subscribe((state) => {
     },
     {
       question: "Can I cloud render only part of my game?",
-      answer: "Yes! Cloud rendering doesn't have to be all or nothing. You can use the stream-kit to render a specific, graphically-intensive part of your game (like the main 3D view) and stream it into a designated area of your existing web UI. This allows you to keep performance-critical UI elements like menus, HUDs, or buttons rendered natively while still leveraging cloud power for demanding visuals."
+      answer: "Yes! Cloud rendering doesn't have to be all or nothing. You can use the stream-kit to render a specific, graphically-intensive part of your game (like the main 3D view) and stream the resulting video *and audio* into a designated area of your existing web UI. This allows you to keep performance-critical UI elements like menus, HUDs, or buttons rendered natively while still leveraging cloud power for demanding visuals."
     },
     {
       question: "How do I separate layers for partial cloud rendering?",
-      answer: "You structure your game routes accordingly. Your main game URL (e.g., `/game`) would load your standard web UI, including menus, HUDs, and the container for the stream. You would then create a specific route (e.g., `/game/stream-layer`) designed *only* to render the graphically intensive scene meant for cloud rendering. When you want to enable the feature, your main UI uses the `stream-kit` to request the `/game/stream-layer` URL be rendered in the cloud. The kit then places the resulting video stream into the designated container in your main UI, effectively compositing the cloud-rendered layer with your native UI layer."
+      answer: "You structure your game routes accordingly. Your main game URL (e.g., `/game`) would load your standard web UI, including menus, HUDs, and the container for the stream. You would then create a specific route (e.g., `/game/stream-layer`) designed *only* to render the graphically intensive scene meant for cloud rendering. When you want to enable the feature, your main UI uses the `stream-kit` to request the `/game/stream-layer` URL be rendered in the cloud. The kit then places the resulting video *and audio* stream into the designated container in your main UI, effectively compositing the cloud-rendered layer with your native UI layer."
     }
   ];
 
@@ -813,144 +814,262 @@ graph LR
         </div>
       </section>
 
+      {/* Stream Kit Section */}
+      <section id="stream-kit" className="section-padding">
+        <div className="container mx-auto">
+          <SectionHeader 
+            title="Stream Kit"
+            subtitle="Compose multiple StreamCanvas instances to create rich, interactive game experiences with cloud-rendered graphics."
+          />
+          
+          <div className="flex items-center justify-center gap-12 overflow-x-auto pb-8 mt-16">
+            {/* World Scene */}
+            <div className="relative w-[280px] h-[560px] rounded-[32px] overflow-hidden bg-[#1e1e2e] border border-border flex-shrink-0">
+              <div className="absolute inset-0 bg-gradient-to-b from-[#2d1b47] to-[#1e1e2e]">
+                <div className="absolute inset-x-0 bottom-0 h-1/3 bg-[#2a1f3d]" />
+                <div className="absolute left-1/2 bottom-[40%] w-3 h-3 bg-[#f056c7] rounded-full" />
+              </div>
+              {/* Header with back button and title */}
+              <div className="absolute top-0 left-0 right-0 p-4">
+                <div className="flex items-center gap-3">
+                  <button className="w-8 h-8 rounded-full bg-black/30 flex items-center justify-center">
+                    <ArrowLeft className="w-4 h-4 text-primary" />
+                  </button>
+                  <span className="text-sm font-medium text-white">World View</span>
+                </div>
+              </div>
+              {/* iOS-style Tab Bar */}
+              <div className="absolute bottom-0 inset-x-0 h-20 bg-black/50 backdrop-blur-sm border-t border-white/10">
+                <div className="grid grid-cols-3 h-full">
+                  <div className="flex flex-col items-center justify-center gap-1">
+                    <div className="w-6 h-6 rounded-lg bg-primary"></div>
+                    <span className="text-xs text-primary">World</span>
+                  </div>
+                  <div className="flex flex-col items-center justify-center gap-1">
+                    <div className="w-6 h-6 rounded-lg bg-white/20"></div>
+                    <span className="text-xs text-white/60">Map</span>
+                  </div>
+                  <div className="flex flex-col items-center justify-center gap-1">
+                    <div className="w-6 h-6 rounded-lg bg-white/20"></div>
+                    <span className="text-xs text-white/60">Character</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Map Scene */}
+            <div className="relative w-[280px] h-[560px] rounded-[32px] overflow-hidden bg-[#1e1e2e] border border-border flex-shrink-0">
+              <div className="absolute inset-0 bg-gradient-to-b from-[#2d1b47] to-[#1e1e2e]">
+                <div className="absolute inset-0 bg-[#2d1b47]/50">
+                  {/* Full screen map visualization */}
+                  <div className="absolute inset-4 grid grid-cols-4 grid-rows-4 gap-2">
+                    {Array.from({ length: 16 }).map((_, i) => (
+                      <div key={i} className="bg-[#1e1e2e]/30 rounded-lg border border-white/10" />
+                    ))}
+                    <div className="absolute left-1/2 top-1/2 w-3 h-3 bg-[#f056c7] rounded-full -translate-x-1/2 -translate-y-1/2" />
+                  </div>
+                </div>
+              </div>
+              {/* Header with back button and title */}
+              <div className="absolute top-0 left-0 right-0 p-4">
+                <div className="flex items-center gap-3">
+                  <button className="w-8 h-8 rounded-full bg-black/30 flex items-center justify-center">
+                    <ArrowLeft className="w-4 h-4 text-primary" />
+                  </button>
+                  <span className="text-sm font-medium text-white">Map View</span>
+                </div>
+              </div>
+              {/* iOS-style Tab Bar */}
+              <div className="absolute bottom-0 inset-x-0 h-20 bg-black/50 backdrop-blur-sm border-t border-white/10">
+                <div className="grid grid-cols-3 h-full">
+                  <div className="flex flex-col items-center justify-center gap-1">
+                    <div className="w-6 h-6 rounded-lg bg-white/20"></div>
+                    <span className="text-xs text-white/60">World</span>
+                  </div>
+                  <div className="flex flex-col items-center justify-center gap-1">
+                    <div className="w-6 h-6 rounded-lg bg-primary"></div>
+                    <span className="text-xs text-primary">Map</span>
+                  </div>
+                  <div className="flex flex-col items-center justify-center gap-1">
+                    <div className="w-6 h-6 rounded-lg bg-white/20"></div>
+                    <span className="text-xs text-white/60">Character</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Character Scene */}
+            <div className="relative w-[280px] h-[560px] rounded-[32px] overflow-hidden bg-[#1e1e2e] border border-border flex-shrink-0">
+              <div className="absolute inset-0 bg-gradient-to-b from-[#2d1b47] to-[#1e1e2e]">
+                <div className="absolute inset-x-0 bottom-0 h-1/3 bg-[#2a1f3d]" />
+                <div className="absolute left-1/2 bottom-[40%] w-3 h-3 bg-[#f056c7] rounded-full" />
+              </div>
+              {/* Header with back button and title */}
+              <div className="absolute top-0 left-0 right-0 p-4">
+                <div className="flex items-center gap-3">
+                  <button className="w-8 h-8 rounded-full bg-black/30 flex items-center justify-center">
+                    <ArrowLeft className="w-4 h-4 text-primary" />
+                  </button>
+                  <span className="text-sm font-medium text-white">Character View</span>
+                </div>
+              </div>
+              {/* Action Buttons */}
+              <div className="absolute bottom-24 left-1/2 -translate-x-1/2">
+                <div className="flex gap-2">
+                  <button className="px-4 py-2 bg-primary rounded text-sm">Inventory</button>
+                  <button className="px-4 py-2 bg-primary rounded text-sm">Menu</button>
+                </div>
+              </div>
+              {/* iOS-style Tab Bar */}
+              <div className="absolute bottom-0 inset-x-0 h-20 bg-black/50 backdrop-blur-sm border-t border-white/10">
+                <div className="grid grid-cols-3 h-full">
+                  <div className="flex flex-col items-center justify-center gap-1">
+                    <div className="w-6 h-6 rounded-lg bg-white/20"></div>
+                    <span className="text-xs text-white/60">World</span>
+                  </div>
+                  <div className="flex flex-col items-center justify-center gap-1">
+                    <div className="w-6 h-6 rounded-lg bg-white/20"></div>
+                    <span className="text-xs text-white/60">Map</span>
+                  </div>
+                  <div className="flex flex-col items-center justify-center gap-1">
+                    <div className="w-6 h-6 rounded-lg bg-primary"></div>
+                    <span className="text-xs text-primary">Character</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Protocol Examples Section */}
       <section id="protocol-examples" className="section-padding">
         <div className="container mx-auto px-4">
-          <SectionHeader 
-            title="SDK Integration Guide"
-            subtitle="Simple code examples showing how to add native capabilities to your web game."
+          <div className="grid grid-cols-1 gap-16">
+            {/* 1. Stream Kit */}
+            <div id="stream-kit-integration">
+              <div className="text-center mb-8">
+                <span className="text-4xl mb-4 inline-block">☁️</span>
+                <h3 className="text-2xl font-bold mb-2 font-orbitron bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-sky-500">Stream Kit Integration</h3>
+                <p className="text-muted-foreground max-w-2xl mx-auto">
+                  Leverage cloud rendering to deliver high-fidelity graphics for specific game scenes, streamed seamlessly to any device. Ideal for composing complex visuals within your standard web UI.
+                </p>
+              </div>
+              <div className="max-w-3xl mx-auto space-y-6">
+                <div className="bg-card p-4 rounded-lg">
+                  <h4 className="font-medium mb-2">Step 1: Create your render routes</h4>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Create standalone pages that render your 3D scenes. These will be cloud-rendered and streamed to your main UI.
+                  </p>
+                  <CodeSnippet 
+                    code={`// app/world/page.js - Three.js world scene
+import { Canvas } from '@react-three/fiber'
+import { World } from '@/components/World'
+
+export default function WorldPage() {
+  return (
+    <Canvas>
+      <World />
+      <ambientLight />
+    </Canvas>
+  )
+}
+
+// app/map/page.js - Google Maps + React Three Fiber scene
+import { Canvas } from '@react-three/fiber'
+import { MapView } from '@/components/MapView'
+
+export default function MapPage() {
+  return (
+    <Canvas>
+      <MapView />
+      <directionalLight position={[10, 10, 5]} />
+    </Canvas>
+  )
+}
+
+// app/character/page.js - Three.js character scene
+import { Canvas } from '@react-three/fiber'
+import { Character } from '@/components/Character'
+
+export default function CharacterPage() {
+  return (
+    <Canvas>
+      <Character />
+      <ambientLight />
+    </Canvas>
+  )
+}`} 
+                    title="Render Routes" 
+                  />
+                </div>
+                <div className="bg-card p-4 rounded-lg">
+                  <h4 className="font-medium mb-2">Step 2: Install the stream-kit SDK</h4>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Add the stream-kit package to your project.
+                  </p>
+                  <CodeSnippet 
+                    code={`npm install @open-game-system/stream-kit`} 
+                    title="Installation" 
+                  />
+                </div>
+                <div className="bg-card p-4 rounded-lg">
+                  <h4 className="font-medium mb-2">Step 3: Use StreamCanvas in your main UI</h4>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Integrate the StreamCanvas component to display the cloud-rendered scenes pointed to by their URLs.
+                  </p>
+                  <CodeSnippet 
+                    code={`// app/page.js - Main game UI
+import { StreamCanvas } from '@open-game-system/stream-kit'
+
+export default function GamePage() {
+  return (
+    <div>
+      <Tabs>
+        {/* Each StreamCanvas points to a standalone render route */}
+        <Tab value="world">
+          <StreamCanvas 
+            url={process.env.NEXT_PUBLIC_WEB_HOST + '/world'} 
+            className="w-full h-full"
           />
-          
-          <div className="grid grid-cols-1 gap-16 mt-12">
-            <div id="auth-kit-integration">
-              <h3 className="text-xl font-bold mb-4 text-center">Auth Kit Integration</h3>
-              <p className="text-center text-muted-foreground mb-6">
-                The Auth Kit enables users to link their game account with the OGS platform, which is required for features like push notifications.
-              </p>
-              <div className="max-w-3xl mx-auto space-y-6">
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="font-medium mb-2">Step 1: Install the Package</h4>
-                  <CodeSnippet code={`npm install @open-game-system/auth-kit`} title="Terminal" />
-                </div>
-                
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="font-medium mb-2">Step 2: Initialize the Client</h4>
-                  <CodeSnippet code={`import { createAuthClient } from '@open-game-system/auth-kit/client';
+        </Tab>
+        
+        <Tab value="map">
+          <StreamCanvas 
+            url={process.env.NEXT_PUBLIC_WEB_HOST + '/map'} 
+            className="w-full h-full"
+          />
+        </Tab>
+        
+        <Tab value="character">
+          <StreamCanvas 
+            url={process.env.NEXT_PUBLIC_WEB_HOST + '/character'} 
+            className="w-full h-full"
+          />
+        </Tab>
+      </Tabs>
 
-// Create auth client in your game's backend
-const authClient = createAuthClient({
-  apiKey: 'your-api-key'
-});`} title="Server-side code" />
-                </div>
-                
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="font-medium mb-2">Step 3: Implement Account Linking</h4>
-                  <CodeSnippet code={`// Backend route to generate link token
-app.post('/api/link-account', async (req, res) => {
-  // Get the user ID from the authenticated session
-  const gameUserId = req.session.userId;
-  
-  // Make sure the user is logged in
-  if (!gameUserId) {
-    return res.status(401).json({ error: 'User not authenticated' });
-  }
-  
-  try {
-    const linkData = await authClient.createLinkToken({
-      gameUserId,
-      redirectUrl: 'https://yourgame.com/auth/callback'
-    });
-    
-    res.json({ linkUrl: linkData.linkUrl });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// Frontend code to redirect user
-function linkAccount() {
-  fetch('/api/link-account', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    credentials: 'include' // Important: sends cookies/session info
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.linkUrl) {
-      window.location.href = data.linkUrl;
-    }
-  })
-  .catch(error => {
-    console.error('Error initiating account linking:', error);
-  });
-}`} title="Account linking implementation" />
-                </div>
-                
-                <div className="mt-2">
-                  <SDKVisual type="auth" />
+      {/* Your game UI controls */}
+      <button>Inventory</button>
+      <button>Menu</button>
+    </div>
+  )
+}`} 
+                    title="Main UI Integration" 
+                  />
                 </div>
               </div>
             </div>
-            
-            <div id="notification-kit-integration">
-              <h3 className="text-xl font-bold mb-4 text-center">Notification Kit Integration</h3>
-              <p className="text-center text-muted-foreground mb-6">
-                The Notification Kit lets you send push notifications to users even when they're not 
-                actively playing your game, increasing engagement.
-              </p>
-              <div className="max-w-3xl mx-auto space-y-6">
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="font-medium mb-2">Step 1: Install the Package</h4>
-                  <CodeSnippet code={`npm install @open-game-system/notification-kit`} title="Terminal" />
-                </div>
-                
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="font-medium mb-2">Step 2: Initialize the Client</h4>
-                  <CodeSnippet code={`import { createNotificationClient } from '@open-game-system/notification-kit/client';
 
-// Create notification client in your game's backend
-const notificationClient = createNotificationClient({
-  apiKey: 'your-api-key'
-});`} title="Server-side code" />
-                </div>
-                
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="font-medium mb-2">Step 3: Send Notifications</h4>
-                  <CodeSnippet code={`// Backend route to send a notification
-app.post('/api/send-notification', async (req, res) => {
-  const { userId, title, message, data } = req.body;
-  
-  try {
-    const result = await notificationClient.sendNotification({
-      recipient: { gameUserId: userId },
-      notification: {
-        type: 'your_turn',
-        title: 'Your Turn',
-        body: "Player 2 has made their move. It's your turn now!",
-        data: data,
-        deepLink: \`https://yourgame.com/games/\${data.gameId}\`
-      }
-    });
-    
-    res.json({ id: result.id, status: result.status });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});`} title="Notification sending implementation" />
-                </div>
-                
-                <div className="mt-2">
-                  <SDKVisual type="notification" />
-                </div>
-              </div>
-            </div>
-            
+            {/* 2. Cast Kit */}
             <div id="cast-kit-integration">
-              <h3 className="text-xl font-bold mb-4 text-center">Cast Kit Integration</h3>
-              <p className="text-center text-muted-foreground mb-6">
-                The Cast Kit lets players display your game on larger screens like TVs, 
-                while using their phones as controllers. This works independently of other kits.
-              </p>
+              <div className="text-center mb-8 mt-16">
+                <span className="text-4xl mb-4 inline-block">📺</span>
+                <h3 className="text-2xl font-bold mb-2 font-orbitron bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-emerald-500">Cast Kit Integration</h3>
+                <p className="text-muted-foreground max-w-2xl mx-auto">
+                  Enable players to cast your game to larger screens like TVs using Chromecast, transforming their mobile device into a dedicated controller for a shared experience.
+                </p>
+              </div>
               <div className="max-w-3xl mx-auto space-y-6">
                 <div className="bg-card p-4 rounded-lg">
                   <h4 className="font-medium mb-2">Step 1: Install the Package</h4>
@@ -959,43 +1078,12 @@ app.post('/api/send-notification', async (req, res) => {
                 
                 <div className="bg-card p-4 rounded-lg">
                   <h4 className="font-medium mb-2">Step 2: Initialize the Client</h4>
-                  <CodeSnippet code={`import { createCastClient } from '@open-game-system/cast-kit/client';
-
-// Create cast client in your game's frontend
-const castClient = createCastClient();
-
-// Listen for cast state changes
-castClient.subscribe((state) => {
-  if (state.isCasting) {
-    // Switch to controller UI
-    showControllerUI();
-  } else {
-    // Show normal game UI
-    showGameUI();
-  }
-});`} title="Client-side code" />
+                  <CodeSnippet code={castKitCode} title="Client-side code" />
                 </div>
                 
                 <div className="bg-card p-4 rounded-lg">
                   <h4 className="font-medium mb-2">Step 3: Implement Casting</h4>
-                  <CodeSnippet code={`// Button to start casting
-document.getElementById('cast-button').addEventListener('click', () => {
-  // Signal that the game is ready to cast
-  castClient.startCasting({
-    roomCode: 'game-123',
-    gameUrl: 'https://yourgame.com/tv?mode=cast&roomCode=game-123'
-  });
-});
-
-// Send controller input when casting
-function sendControllerInput(action, data) {
-  if (castClient.getState().isCasting) {
-    castClient.sendInput({
-      action: action,
-      data: data
-    });
-  }
-}`} title="Casting implementation" />
+                  <CodeSnippet code={`// Button to start casting\ndocument.getElementById('cast-button').addEventListener('click', () => {\n  // Signal that the game is ready to cast\n  castClient.startCasting({\n    roomCode: 'game-123',\n    gameUrl: 'https://yourgame.com/tv?mode=cast&roomCode=game-123'\n  });\n});\n\n// Send controller input when casting\nfunction sendControllerInput(action, data) {\n  if (castClient.getState().isCasting) {\n    castClient.sendInput({\n      action: action,\n      data: data\n    });\n  }\n}`} title="Casting implementation" />
                 </div>
                 
                 <div className="mt-2">
@@ -1003,133 +1091,65 @@ function sendControllerInput(action, data) {
                 </div>
               </div>
             </div>
-
-            <div id="stream-kit-integration">
-              <h3 className="text-xl font-bold mb-4 text-center">Stream Kit Integration</h3>
-              <p className="text-center text-muted-foreground mb-6">
-                The Stream Kit facilitates rendering your game in the cloud and streaming it via WebRTC.
-                Ideal for turn-based games needing high-fidelity graphics on any device.
-              </p>
+            
+            {/* 3. Notification Kit */}
+            <div id="notification-kit-integration">
+              <div className="text-center mb-8 mt-16">
+                <span className="text-4xl mb-4 inline-block">🔔</span>
+                <h3 className="text-2xl font-bold mb-2 font-orbitron bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-orange-500">Notification Kit Integration</h3>
+                <p className="text-muted-foreground max-w-2xl mx-auto">
+                  Re-engage players with timely push notifications delivered directly to their devices via the OGS app, even when they aren't actively playing your game.
+                </p>
+              </div>
               <div className="max-w-3xl mx-auto space-y-6">
                 <div className="bg-card p-4 rounded-lg">
                   <h4 className="font-medium mb-2">Step 1: Install the Package</h4>
-                  <CodeSnippet code={`npm install @open-game-system/stream-kit`} title="Terminal" />
+                  <CodeSnippet code={`npm install @open-game-system/notification-kit`} title="Terminal" />
                 </div>
-
+                
                 <div className="bg-card p-4 rounded-lg">
-                  <h4 className="font-medium mb-2">Step 2: Initialize the Client (Frontend)</h4>
-                  <CodeSnippet code={`import { createStreamClient } from '@open-game-system/stream-kit/client';
-
-// Initialize in your game's frontend
-const streamClient = createStreamClient();
-
-// Listen for state changes (e.g., connected, disconnected, error)
-streamClient.subscribe((state) => {
-  console.log('Stream state:', state.status);
-  // Update UI based on state
-});`} title="Client-side code" />
+                  <h4 className="font-medium mb-2">Step 2: Initialize the Client</h4>
+                  <CodeSnippet code={notificationKitCode} title="Server-side code" />
                 </div>
-
+                
                 <div className="bg-card p-4 rounded-lg">
-                  <h4 className="font-medium mb-2">Step 3: Request a Stream & Integrate into UI</h4>
-                  <CodeSnippet code={`// --- Frontend React Code ---
-import React, { useRef, useState, useEffect, useMemo } from 'react';
-import { createStreamClient } from '@open-game-system/stream-kit/client'; // Assuming path
-
-function MyGameComponent() {
-  const streamContainerRef = useRef<HTMLDivElement>(null);
-  const [isStreaming, setIsStreaming] = useState(false);
-  const [streamError, setStreamError] = useState<string | null>(null);
-
-  // Initialize streamClient only once
-  const streamClient = useMemo(() => createStreamClient(), []);
-
-  useEffect(() => {
-    // Subscribe to stream state changes
-    const unsubscribe = streamClient.subscribe((state) => {
-      setIsStreaming(state.status === 'connected');
-      if (state.status === 'error') {
-        setStreamError(state.error || 'Unknown streaming error');
-      }
-      if (state.status !== 'error') {
-        setStreamError(null); // Clear error if status is not error
-      }
-    });
-    // Cleanup subscription on unmount
-    return () => unsubscribe();
-  }, [streamClient]);
-
-  // Function to initiate the cloud stream
-  const handleStartStream = async () => {
-    if (!streamContainerRef.current) {
-      console.error("Stream container ref not available");
-      setStreamError("UI not ready for stream.");
-      return;
-    }
-    setStreamError(null);
-    setIsStreaming(true); // Indicate loading/connecting state
-
-    try {
-      await streamClient.requestStream({
-        gameUrl: 'https://your-game.com/path-to-render',
-        targetElement: streamContainerRef.current, // Tell the kit where to inject the video
-        // Optional: Pass initial data if needed by the game in the cloud
-        // initialData: { userToken: '...', difficulty: 'hard' }
-      });
-      console.log('Stream requested, kit handling connection...');
-      // isStreaming state will be updated by the subscription
-    } catch (error: any) {
-      console.error('Failed to start cloud stream:', error);
-      setStreamError(error.message || 'Failed to initiate stream');
-      setIsStreaming(false);
-    }
-  };
-
-  const handleStopStream = () => {
-    streamClient.disconnect(); // Ask the kit to stop the stream
-    setIsStreaming(false);
-    setStreamError(null);
-  };
-
-  return (
-    <div className="game-layout" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      <div className="game-ui-elements" style={{ border: '1px solid grey', padding: '1rem' }}>
-        {/* Your game's native UI elements go here */}
-        <h2>Player Score: 123</h2>
-        <p>Other UI Controls...</p>
-        {!isStreaming ? (
-          <button onClick={handleStartStream}>
-            Start Cloud Stream
-          </button>
-        ) : (
-          <button onClick={handleStopStream}>
-            Stop Stream
-          </button>
-        )}
-        {streamError && <p style={{ color: 'red', marginTop: '0.5rem' }}>Error: {streamError}</p>}
-      </div>
-
-      {/* Container where the cloud-rendered game video will be injected */}
-      <div ref={streamContainerRef} id="stream-container" className="stream-view-area" style={{ border: '1px solid blue', minHeight: '300px', padding: '1rem', position: 'relative' }}>
-        {streamClient.getState().status === 'connecting' && (
-           <div className="placeholder">Connecting to stream...</div>
-        )}
-        {streamClient.getState().status === 'idle' && !streamError && (
-          <div className="placeholder">Stream not active. Click 'Start Cloud Stream' above.</div>
-        )}
-        {/* The streamClient manages the actual video element inside this div */}
-        {/* The targetElement itself should be visible for the client to attach */}
-      </div>
-    </div>
-  );
-}`} title="Integrating Stream into UI (React Example)" />
+                  <h4 className="font-medium mb-2">Step 3: Send Notifications</h4>
+                  <CodeSnippet code={`// Backend route to send a notification\napp.post('/api/send-notification', async (req, res) => {\n  const { userId, title, message, data } = req.body;\n  \n  try {\n    const result = await notificationClient.sendNotification({\n      recipient: { gameUserId: userId },\n      notification: {\n        type: 'your_turn',\n        title: 'Your Turn',\n        body: "Player 2 has made their move. It's your turn now!",\n        data: data,\n        deepLink: \`https://yourgame.com/games/\${data.gameId}\`\n      }\n    });\n    \n    res.json({ id: result.id, status: result.status });\n  } catch (error) {\n    res.status(500).json({ error: error.message });\n  }\n});`} title="Notification sending implementation" />
                 </div>
-
+                
                 <div className="mt-2">
-                  {/* TODO: Add a visual here explaining the compositing/layering concept */}
-                  {/* Example: Show native UI layer + streamed game layer -> final view */}
-                  {/* Inspiration: https://miro.medium.com/v2/resize:fit:1400/1*3_G9QDky6sADnV7t_dkUIQ.jpeg */}
-                  <p className="text-center text-sm text-muted-foreground">(Visual representation for streaming TBD)</p>
+                  <SDKVisual type="notification" />
+                </div>
+              </div>
+            </div>
+
+            {/* 4. Auth Kit */}
+            <div id="auth-kit-integration">
+              <div className="text-center mb-8 mt-16">
+                <span className="text-4xl mb-4 inline-block">🔐</span>
+                <h3 className="text-2xl font-bold mb-2 font-orbitron bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-rose-500">Auth Kit Integration</h3>
+                <p className="text-muted-foreground max-w-2xl mx-auto">
+                  Securely link player accounts between your game and the OGS platform, enabling persistent identity and unlocking features like targeted notifications.
+                </p>
+              </div>
+              <div className="max-w-3xl mx-auto space-y-6">
+                <div className="bg-card p-4 rounded-lg">
+                  <h4 className="font-medium mb-2">Step 1: Install the Package</h4>
+                  <CodeSnippet code={`npm install @open-game-system/auth-kit`} title="Terminal" />
+                </div>
+                
+                <div className="bg-card p-4 rounded-lg">
+                  <h4 className="font-medium mb-2">Step 2: Initialize the Client</h4>
+                  <CodeSnippet code={authKitCode} title="Server-side code" />
+                </div>
+                
+                <div className="bg-card p-4 rounded-lg">
+                  <h4 className="font-medium mb-2">Step 3: Implement Account Linking</h4>
+                  <CodeSnippet code={`// Backend route to generate link token\napp.post('/api/link-account', async (req, res) => {\n  // Get the user ID from the authenticated session\n  const gameUserId = req.session.userId;\n  \n  // Make sure the user is logged in\n  if (!gameUserId) {\n    return res.status(401).json({ error: 'User not authenticated' });\n  }\n  \n  try {\n    const linkData = await authClient.createLinkToken({\n      gameUserId,\n      redirectUrl: 'https://yourgame.com/auth/callback'\n    });\n    \n    res.json({ linkUrl: linkData.linkUrl });\n  } catch (error) {\n    res.status(500).json({ error: error.message });\n  }\n});\n\n// Frontend code to redirect user\nfunction linkAccount() {\n  fetch('/api/link-account', {\n    method: 'POST',\n    headers: { 'Content-Type': 'application/json' },\n    credentials: 'include' // Important: sends cookies/session info\n  })\n  .then(res => res.json())\n  .then(data => {\n    if (data.linkUrl) {\n      window.location.href = data.linkUrl;\n    }\n  })\n  .catch(error => {\n    console.error('Error initiating account linking:', error);\n  });\n}`} title="Account linking implementation" />
+                </div>
+                
+                <div className="mt-2">
+                  <SDKVisual type="auth" />
                 </div>
               </div>
             </div>
@@ -1246,7 +1266,7 @@ function MyGameComponent() {
                 </div>
               </div>
               
-              <div className="bg-gradient-to-br from-gray-900/80 to-primary/5 p-6 rounded-lg mt-10 border border-primary/20 shadow-lg">
+              <div className="bg-gradient-to-br from-gray-100 to-primary/10 p-6 rounded-lg mt-10 border border-primary/20 shadow-lg">
                 <h4 className="text-xl font-bold mb-8 text-center">How Your Web Game Loads in the OGS App</h4>
                 
                 <div className="flex flex-col gap-8">
@@ -1254,7 +1274,7 @@ function MyGameComponent() {
                     <div className="flex flex-col items-center justify-start">
                       <div className="flex items-center justify-center mb-5 w-full">
                         <div className="flex items-center justify-center mb-5 w-full">
-                          <div className="bg-[#22303c]/80 p-4 rounded-xl border border-[#4a6baf] p-4 rounded-xl shadow-md inline-block transform transition-transform hover:scale-105">
+                          <div className="bg-[#22303c]/80 border border-[#4a6baf] shadow-md inline-block transform transition-transform hover:scale-105 p-4 rounded-xl">
                             <span className="text-4xl mr-2">🎮</span>
                             <span className="text-white text-2xl mx-2">→</span>
                             <span className="text-4xl ml-2">📱</span>
@@ -1266,7 +1286,7 @@ function MyGameComponent() {
                     
                     <div className="flex flex-col items-center justify-start">
                       <div className="flex items-center justify-center mb-5 w-full">
-                        <div className="bg-[#331b47]/80 p-4 rounded-xl border border-[#9333EA] p-4 rounded-xl shadow-md inline-block transform transition-transform hover:scale-105">
+                        <div className="bg-[#331b47]/80 border border-[#9333EA] shadow-md inline-block transform transition-transform hover:scale-105 p-4 rounded-xl">
                           <span className="text-4xl mr-2">📱</span>
                           <span className="text-white text-2xl mx-1">→</span>
                           <span className="text-4xl mx-1">🔔</span>
@@ -1279,7 +1299,7 @@ function MyGameComponent() {
                     
                     <div className="flex flex-col items-center justify-start">
                       <div className="flex items-center justify-center mb-5 w-full">
-                        <div className="bg-[#2d2d3f]/80 p-4 rounded-xl border border-[#777] p-4 rounded-xl shadow-md inline-block transform transition-transform hover:scale-105">
+                        <div className="bg-[#2d2d3f]/80 border border-[#777] shadow-md inline-block transform transition-transform hover:scale-105 p-4 rounded-xl">
                           <span className="text-4xl mr-2">🌐</span>
                           <span className="text-white text-2xl mx-2">→</span>
                           <span className="text-4xl ml-2">🎮</span>
@@ -1336,3 +1356,4 @@ function MyGameComponent() {
 };
 
 export default Index;
+
